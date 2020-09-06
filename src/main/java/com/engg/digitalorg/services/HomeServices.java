@@ -11,4 +11,9 @@ public class HomeServices {
         return "Greetings from Digital Org!";
     }
 
+    @RequestMapping("/home")
+    public String home() {
+        return "Greetings from Digital Org Home page!";
+    }
+
 }
