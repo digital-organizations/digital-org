@@ -1,12 +1,12 @@
 package com.engg.digitalorg.services;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HomeServices {
+public class GroupServices {
 
-    @RequestMapping("/")
+    @RequestMapping("/group")
     public String index() {
         return "Greetings from Digital Org!";
     }

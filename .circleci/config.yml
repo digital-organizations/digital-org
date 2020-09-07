@@ -1,25 +1,25 @@
-#version: 2.1
-
-#orbs:
-#  maven: circleci/maven@0.0.12
-
-#workflows:
-#  maven_test:
-#    jobs:
-#      - maven/test # checkout, build, test, and upload test results
-
-
 version: 2.1
-jobs:
-  build:
-    machine: true
-    working_directory: ~/repo
 
-    steps:
-      - checkout
-      - run: docker build -t digital-org:CIRCLE_BUILD_NUM .
+orbs:
+  maven: circleci/maven@0.0.12
+
 workflows:
-  version: 2.1
-  workflow:
+  maven_test:
     jobs:
-      - build
+      - maven/test # checkout, build, test, and upload test results
+
+
+#version: 2.1
+#jobs:
+#  build:
+#    machine: true
+#    working_directory: ~/repo
+#
+#    steps:
+#      - checkout
+#      - run: docker build -t digital-org:CIRCLE_BUILD_NUM .
+#workflows:
+#  version: 2.1
+#  workflow:
+#    jobs:
+#      - build
