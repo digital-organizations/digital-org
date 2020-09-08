@@ -7,7 +7,6 @@ orbs:
 workflows:
   build_and_test:
     jobs:
-      - checkout
       - build
       - test # checkout, build, test, and upload test results
 
@@ -16,16 +15,12 @@ jobs:
     docker:
       - image: circleci/openjdk:latest
     steps:
-      - codecov/upload:
-          file: target/surefire-reports
+      - checkout
       - run:
-          name: Save test results
+          name: build maven
           command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
+            java -version
+            mvn --version
+            mvn clean install
       - store_test_results:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results/junit
-
+          path: target/surefire-reports
