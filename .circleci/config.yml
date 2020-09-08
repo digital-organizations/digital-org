@@ -16,3 +16,4 @@ jobs:
     steps:
       - codecov/upload:
           file: target/surefire-reports
+      - run: "bash <(curl -s https://codecov.io/bash)"
