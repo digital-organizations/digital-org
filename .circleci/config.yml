@@ -1,8 +1,4 @@
-version: 2.1
-
-orbs:
-  maven: circleci/maven@0.0.12
-
+version: 2
 jobs:
   build:
     docker:
