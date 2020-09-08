@@ -15,4 +15,4 @@ jobs:
       - image: circleci/openjdk:latest
     steps:
       - codecov/upload:
-          file: {{coverage_report_filepath}}
+          file: target/surefire-reports
