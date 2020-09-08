@@ -5,10 +5,9 @@ orbs:
   codecov: codecov/codecov@1.0.2
 
 workflows:
-  build_and_test:
+  maven_test:
     jobs:
-      - build
-      - test # checkout, build, test, and upload test results
+      - maven/test # checkout, build, test, and upload test results
 
 jobs:
   build:
