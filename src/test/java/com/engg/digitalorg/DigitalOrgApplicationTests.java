@@ -3,10 +3,10 @@ package com.engg.digitalorg;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class DigitalOrgApplicationTests {
 
-    @Test
+    //@Test
     void contextLoads() {
     }
 
