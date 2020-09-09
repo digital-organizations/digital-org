@@ -23,4 +23,5 @@ public class RequestCard {
     private Date updated_date;
     private String updated_by;
     private String group_name;
+    private Boolean authorize;
 }
