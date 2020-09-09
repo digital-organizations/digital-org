@@ -1,8 +1,6 @@
 package com.engg.digitalorg.managers;
 
-import com.engg.digitalorg.model.Card;
 import com.engg.digitalorg.model.Group;
-import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
