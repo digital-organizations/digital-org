@@ -15,5 +15,6 @@ create table digital.card
     component         varchar,
     suggested_by      varchar,
     updated_date      date,
-    updated_by        varchar
+    updated_by        varchar,
+    authorize         boolean
 );
