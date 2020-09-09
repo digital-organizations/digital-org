@@ -2,6 +2,7 @@ package com.engg.digitalorg.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.With;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,8 +10,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="group", schema = "digital")
-public class Group {
+@Table(name="card", schema = "digital")
+public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,5 +31,6 @@ public class Group {
     private Date updated_date;
     private String updated_by;
     private String group_name;
+    private Boolean authorize;
 
 }

@@ -3,19 +3,11 @@ package com.engg.digitalorg.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
-@Entity
-@Table(name="group", schema = "digital")
-public class Group {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
+public class RequestGroup {
     private String title;
     private String description;
     private String original_url;
@@ -30,5 +22,4 @@ public class Group {
     private Date updated_date;
     private String updated_by;
     private String group_name;
-
 }
