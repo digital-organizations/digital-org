@@ -1,21 +1,30 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@0.0.12
+  maven: circleci/maven@1.0.2
   codecov: codecov/codecov@1.0.2
 
 workflows:
-  build_and_test:
+  maven_test:
     jobs:
-      - checkout
-      - build
-      - test # checkout, build, test, and upload test results
+      - maven/test # checkout, build, test, and upload test results
 
-jobs:
-  build:
-    docker:
-      - image: circleci/openjdk:latest
-    steps:
-      - codecov/upload:
-          file: target/surefire-reports
+
+description: >
+  Upload test results.
+
+  This will populate the Test Summary tab in the CircleCI UI. By default it will
+
+  look in `target/surefire-reports` (the default location for maven test
+  results).
+
+  You can override where to find the test results with the path parameter.
+parameters:
+  test_results_path:
+    default: target/surefire-reports
+    description: Specify a custom path for maven test results
+    type: string
+steps:
+  - store_test_results:
+      path: << parameters.test_results_path >>
 
