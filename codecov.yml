@@ -1,0 +1,20 @@
+coverage:
+  status:
+    project:
+      backend:
+        flags:
+          - backend
+      frontend:
+        target: 50%
+        flags:
+          - frontend
+flags:
+  backend:
+    paths:
+      - src/main/java/
+  frontend:
+    paths:
+      - src/main/
+  tests:
+    paths:
+      - src/main/test/

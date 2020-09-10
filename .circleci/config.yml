@@ -1,13 +1,7 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@0.0.12
   codecov: codecov/codecov@1.1.1
-
-workflows:
-  maven_test:
-    jobs:
-      - maven/test # checkout, build, test, and upload test results
 
 jobs:
   build:
@@ -19,14 +13,9 @@ jobs:
           name: build maven
           command: |
             mvn clean install
-      - store_test_results:
-          path: target/surefire-reports
-      - codecov/upload:
-          file: { { coverage_report_filepath } }
 
-
-adder: {}
-calculator: {}
+# This code is licensed from CircleCI to the user under the MIT license. See
+# https://circleci.com/orbs/registry/licensing for details.
 commands:
   upload:
     parameters:
@@ -85,4 +74,3 @@ description: |
 display:
   home_url: https://codecov.io/
   source_url: https://github.com/codecov/codecov-circleci-orb
-subtractor: {}
