@@ -1,34 +1,24 @@
+# This code is licensed from CircleCI to the user under the MIT license. See
+# https://circleci.com/orbs/registry/licensing for details.
 version: 2.1
 
-# add your orb below, to be used in integration tests (note: a @dev:alpha
-# release must exist.);
 orbs:
-  codecov: codecov/codecov@dev:alpha
-  orb-tools: circleci/orb-tools@0.0.12
+  maven: circleci/maven@0.0.12
+  codecov: codecov/codecov@1.0.2
 
-# Pipeline parameters
-parameters:
-  # These pipeline parameters are required by the "trigger-integration-tests-workflow"
-  # job, by default.
-  run-integration-tests:
-    type: boolean
-    default: false
-  dev-orb-version:
-    type: string
-    default: "dev:alpha"
+workflows:
+  build_and_test:
+    jobs:
+      - checkout
+      - build
+      - test # checkout, build, test, and upload test results
+      - integration-test
 
 jobs:
-  # This job is an example of an integration testing job.
-  # This job should execute a command from your orb and verify
-  # the output is as expected, otherwise the job should fail.
-  #
-  # Rename this job and add more as needed.
-  #
-  integration-test:
-    executor: orb-tools/maven
+  build:
+    docker:
+      - image: circleci/openjdk:latest
     steps:
-      - checkout
-      - run: mvn clean install
       - run:
           name: Save test results
           command: |
@@ -39,13 +29,14 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+
+  integration-test:
+    executor: orb-tools/codecov
+    steps:
+      - checkout
+      - run:
+      - run: mvn clean install
       - codecov/upload:
-          flags: backend
+          file: target/surefire-reports
 
 
-workflows:
-    jobs:
-      # your integration test jobs go here: essentially, run all your orb's
-      # jobs and commands to ensure they behave as expected. or, run other
-      # integration tests of your choosing
-      - integration-test
