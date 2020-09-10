@@ -1,76 +1,51 @@
 version: 2.1
 
+# add your orb below, to be used in integration tests (note: a @dev:alpha
+# release must exist.);
 orbs:
-  codecov: codecov/codecov@1.1.1
+  codecov: codecov/codecov@dev:alpha
+  orb-tools: circleci/orb-tools@0.0.12
+
+# Pipeline parameters
+parameters:
+  # These pipeline parameters are required by the "trigger-integration-tests-workflow"
+  # job, by default.
+  run-integration-tests:
+    type: boolean
+    default: false
+  dev-orb-version:
+    type: string
+    default: "dev:alpha"
 
 jobs:
-  build:
-    docker:
-      - image: circleci/openjdk:latest
+  # This job is an example of an integration testing job.
+  # This job should execute a command from your orb and verify
+  # the output is as expected, otherwise the job should fail.
+  #
+  # Rename this job and add more as needed.
+  #
+  integration-test:
+    executor: orb-tools/maven
     steps:
       - checkout
+      - run: mvn clean install
       - run:
-          name: build maven
+          name: Save test results
           command: |
-            mvn clean install
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+      - codecov/upload:
+          flags: backend
 
-# This code is licensed from CircleCI to the user under the MIT license. See
-# https://circleci.com/orbs/registry/licensing for details.
-commands:
-  upload:
-    parameters:
-      file:
-        default: ""
-        description: Path to the code coverage data file to upload.
-        type: string
-      flags:
-        default: ""
-        description: Flag the upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
-        type: string
-      token:
-        default: ${CODECOV_TOKEN}
-        description: Set the private repository token as the value of the variable CODECOV_TOKEN using CircleCI Environment Variables.
-        type: string
-      upload_name:
-        default: ${CIRCLE_BUILD_NUM}
-        description: Custom defined name of the upload. Visible in Codecov UI
-        type: string
-      url:
-        default: https://codecov.io/bash
-        description: Custom url to submit the codecov result. Default to "https://codecov.io/bash"
-        type: string
-      when:
-        default: always
-        description: When should this step run?
-        type: string
-    steps:
-      - when:
-          condition: << parameters.file >>
-          steps:
-            - run:
-                command: |
-                  curl -s << parameters.url >> | bash -s -- \
-                    -f "<< parameters.file >>" \
-                    -t "<< parameters.token >>" \
-                    -n "<< parameters.upload_name >>" \
-                    -F "<< parameters.flags >>" \
-                    -Z || echo 'Codecov upload failed'
-                name: Upload Coverage Results
-                when: << parameters.when >>
-      - unless:
-          condition: << parameters.file >>
-          steps:
-            - run:
-                command: |
-                  curl -s << parameters.url >> | bash -s -- \
-                    -t "<< parameters.token >>" \
-                    -n "<< parameters.upload_name >>" \
-                    -F "<< parameters.flags >>" \
-                    -Z || echo 'Codecov upload failed'
-                name: Upload Coverage Results
-                when: << parameters.when >>
-description: |
-  Upload your coverage reports to Codecov without dealing with complex configurations. This orb helps you get coverage results quickly so that you can breathe easier and commit your code with confidence.
-display:
-  home_url: https://codecov.io/
-  source_url: https://github.com/codecov/codecov-circleci-orb
+
+workflows:
+    jobs:
+      # your integration test jobs go here: essentially, run all your orb's
+      # jobs and commands to ensure they behave as expected. or, run other
+      # integration tests of your choosing
+      - integration-test
