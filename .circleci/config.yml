@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@0.0.12
-  codecov: codecov/codecov@1.0.2
+  codecov: codecov/codecov@1.1.1
 
 workflows:
   maven_test:
@@ -18,8 +18,71 @@ jobs:
       - run:
           name: build maven
           command: |
-            java -version
-            mvn --version
             mvn clean install
       - store_test_results:
           path: target/surefire-reports
+      - codecov/upload:
+          file: { { coverage_report_filepath } }
+
+
+adder: {}
+calculator: {}
+commands:
+  upload:
+    parameters:
+      file:
+        default: ""
+        description: Path to the code coverage data file to upload.
+        type: string
+      flags:
+        default: ""
+        description: Flag the upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+        type: string
+      token:
+        default: ${CODECOV_TOKEN}
+        description: Set the private repository token as the value of the variable CODECOV_TOKEN using CircleCI Environment Variables.
+        type: string
+      upload_name:
+        default: ${CIRCLE_BUILD_NUM}
+        description: Custom defined name of the upload. Visible in Codecov UI
+        type: string
+      url:
+        default: https://codecov.io/bash
+        description: Custom url to submit the codecov result. Default to "https://codecov.io/bash"
+        type: string
+      when:
+        default: always
+        description: When should this step run?
+        type: string
+    steps:
+      - when:
+          condition: << parameters.file >>
+          steps:
+            - run:
+                command: |
+                  curl -s << parameters.url >> | bash -s -- \
+                    -f "<< parameters.file >>" \
+                    -t "<< parameters.token >>" \
+                    -n "<< parameters.upload_name >>" \
+                    -F "<< parameters.flags >>" \
+                    -Z || echo 'Codecov upload failed'
+                name: Upload Coverage Results
+                when: << parameters.when >>
+      - unless:
+          condition: << parameters.file >>
+          steps:
+            - run:
+                command: |
+                  curl -s << parameters.url >> | bash -s -- \
+                    -t "<< parameters.token >>" \
+                    -n "<< parameters.upload_name >>" \
+                    -F "<< parameters.flags >>" \
+                    -Z || echo 'Codecov upload failed'
+                name: Upload Coverage Results
+                when: << parameters.when >>
+description: |
+  Upload your coverage reports to Codecov without dealing with complex configurations. This orb helps you get coverage results quickly so that you can breathe easier and commit your code with confidence.
+display:
+  home_url: https://codecov.io/
+  source_url: https://github.com/codecov/codecov-circleci-orb
+subtractor: {}
