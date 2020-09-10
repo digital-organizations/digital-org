@@ -10,6 +10,7 @@ import java.util.List;
 
 @RequestMapping("/group")
 @Api(tags = "Group Services", description = "Group Api")
+@CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
 public interface GroupApi {
 
     @ApiOperation(value = "get all group", nickname = "getAllGroup", notes = "List all group", response = List.class)

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RequestMapping("/card")
 @Api(tags = "Card Services", description = "Card Api")
+@CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
 public interface CardApi {
 
     @ApiOperation(value = "Create new card", nickname = "createCard", notes = "User to create New card", response = Card.class)
