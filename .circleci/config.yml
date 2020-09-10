@@ -27,4 +27,6 @@ parameters:
 steps:
   - store_test_results:
       path: << parameters.test_results_path >>
+  - codecov/upload:
+      file: target/surefire-reports
 
