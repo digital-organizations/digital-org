@@ -1,4 +1,4 @@
-package com.engg.digitalorg.model;
+package com.engg.digitalorg.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class RequestGroup {
+public class GroupRequest {
     private String title;
     private String description;
     private String original_url;

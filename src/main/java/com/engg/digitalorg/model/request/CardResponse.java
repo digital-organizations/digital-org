@@ -1,22 +1,15 @@
-package com.engg.digitalorg.model;
+package com.engg.digitalorg.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.With;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
-@Entity
-@Table(name="card", schema = "digital")
-public class Card {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CardResponse {
     private int id;
-
     private String title;
     private String description;
     private String original_url;
@@ -32,7 +25,6 @@ public class Card {
     private String updated_by;
     private String group_name;
     private Boolean authorize;
-
-    @Lob
-    private byte[] file;
+    private MultipartFile file;
+    private Boolean hasAdmin;
 }

@@ -4,7 +4,7 @@ import com.engg.digitalorg.api.GroupApi;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.Group;
-import com.engg.digitalorg.model.RequestGroup;
+import com.engg.digitalorg.model.request.GroupRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +24,9 @@ public class GroupService implements GroupApi {
     }
 
     @Override
-    public Group createGroup(RequestGroup requestGroup) throws DigitalOrgException {
+    public Group createGroup(GroupRequest groupRequest) throws DigitalOrgException {
         ModelMapper modelMapper = new ModelMapper();
-        Group group = modelMapper.map(requestGroup, Group.class);
+        Group group = modelMapper.map(groupRequest, Group.class);
         return groupManager.createGroup(group);
     }
 
@@ -36,11 +36,11 @@ public class GroupService implements GroupApi {
     }
 
     @Override
-    public Group updateGroup(RequestGroup requestGroup, Integer groupId) throws DigitalOrgException {
+    public Group updateGroup(GroupRequest groupRequest, Integer groupId) throws DigitalOrgException {
         //TODO : Valid group validation
         //TODO : only admin can update the group
         ModelMapper modelMapper = new ModelMapper();
-        Group group = modelMapper.map(requestGroup, Group.class);
+        Group group = modelMapper.map(groupRequest, Group.class);
         group.setId(groupId);
         return groupManager.updateGroup(group);
     }
