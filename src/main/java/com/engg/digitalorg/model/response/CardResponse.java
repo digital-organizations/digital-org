@@ -1,4 +1,4 @@
-package com.engg.digitalorg.model.request;
+package com.engg.digitalorg.model.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,11 +20,10 @@ public class CardResponse {
     private String tribe;
     private String team;
     private String component;
-    private String suggested_by;
     private Date updated_date;
     private String updated_by;
     private String group_name;
-    private Boolean authorize;
-    private MultipartFile file;
+    private Boolean active;
     private Boolean hasAdmin;
 }
+

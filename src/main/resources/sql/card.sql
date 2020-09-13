@@ -9,12 +9,14 @@ create table digital.card
     expire_date       date,
     created_date      date,
     created_by        varchar,
-    group_name        varchar,
     tribe             varchar,
     team              varchar,
     component         varchar,
-    suggested_by      varchar,
     updated_date      date,
     updated_by        varchar,
-    authorize         boolean
+    group_name        varchar,
+    active            boolean,
+    file              oid
+
 );
+}

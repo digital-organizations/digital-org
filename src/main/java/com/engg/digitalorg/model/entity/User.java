@@ -1,4 +1,4 @@
-package com.engg.digitalorg.model;
+package com.engg.digitalorg.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

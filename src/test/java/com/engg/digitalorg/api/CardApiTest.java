@@ -1,7 +1,7 @@
 package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.managers.CardManager;
-import com.engg.digitalorg.model.Card;
+import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.services.CardService;
 import org.junit.Assert;
@@ -38,10 +38,10 @@ public class CardApiTest {
 
     @Test
     public void getAllCardsTest() throws Exception {
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card());
+        List<CardResponse> cardList = new ArrayList<>();
+        cardList.add(new CardResponse());
         Mockito.when(cardService.getAllCard()).thenReturn(cardList);
-        List<Card> cards = cardManager.getAllCard();
+        List<CardResponse> cards = cardManager.getAllCard();
         Mockito.verify(cardManager).getAllCard();
         Assert.assertEquals(cards, cardList);
 

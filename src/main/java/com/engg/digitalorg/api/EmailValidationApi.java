@@ -1,22 +1,13 @@
 package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
-import com.engg.digitalorg.model.Card;
-import com.engg.digitalorg.model.request.CardRequest;
-import com.engg.digitalorg.model.request.GroupRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.engg.digitalorg.exception.DigitalOrgException;
-import com.engg.digitalorg.model.Card;
-import com.engg.digitalorg.model.request.CardRequest;
-import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/email-validate")

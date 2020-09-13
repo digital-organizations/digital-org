@@ -1,19 +1,17 @@
 package com.engg.digitalorg.managers;
 
-import com.engg.digitalorg.api.EmailValidationApi;
-import com.engg.digitalorg.exception.DigitalOrgException;
-import com.engg.digitalorg.model.Card;
-import com.engg.digitalorg.model.Group;
-import com.engg.digitalorg.model.request.CardResponse;
+import com.engg.digitalorg.model.entity.Card;
+import com.engg.digitalorg.model.entity.Group;
+import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.GroupRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component

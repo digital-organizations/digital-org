@@ -1,8 +1,7 @@
-package com.engg.digitalorg.model;
+package com.engg.digitalorg.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.With;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,12 +26,9 @@ public class Card {
     private String tribe;
     private String team;
     private String component;
-    private String suggested_by;
     private Date updated_date;
     private String updated_by;
     private String group_name;
-    private Boolean authorize;
+    private Boolean active;
 
-    @Lob
-    private byte[] file;
 }
