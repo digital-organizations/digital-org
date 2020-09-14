@@ -5,6 +5,8 @@ import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.GroupRequest;
+import com.engg.digitalorg.model.response.CardResponse;
+import com.engg.digitalorg.model.response.GroupResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,17 +23,8 @@ public class GroupService implements GroupApi {
     private GroupManager groupManager;
 
     @Override
-    public Group createGroup(GroupRequest groupRequest) throws DigitalOrgException {
-        ModelMapper modelMapper = new ModelMapper();
-        Group group = modelMapper.map(groupRequest, Group.class);
-        group.setCreated_date(new Date());
-        group.setUpdated_date(new Date());
-        return groupManager.createGroup(group);
-    }
-
-    @Override
-    public List<Group> getAllGroup() throws DigitalOrgException {
-        return groupManager.findAllActiveGroup();
+    public ResponseEntity createGroup(GroupRequest groupRequest) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.createGroup(groupRequest), HttpStatus.CREATED);
     }
 
     @Override
@@ -40,13 +33,13 @@ public class GroupService implements GroupApi {
     }
 
     @Override
-    public Group updateGroup(GroupRequest groupRequest, Integer groupId) throws DigitalOrgException {
-        //TODO : Valid group validation
+    public ResponseEntity updateGroup(GroupRequest groupRequest, int groupId) throws DigitalOrgException {
+        Group group = groupManager.getGroupById(groupId);
+        if(group == null) {
+            throw new DigitalOrgException("Requested Group is not found.");
+        }
         //TODO : only admin can update the group
-        ModelMapper modelMapper = new ModelMapper();
-        Group group = modelMapper.map(groupRequest, Group.class);
-        group.setId(groupId);
-        return groupManager.updateGroup(group);
+        return new ResponseEntity<>(groupManager.createGroup(groupRequest), HttpStatus.OK);
     }
 
     @Override

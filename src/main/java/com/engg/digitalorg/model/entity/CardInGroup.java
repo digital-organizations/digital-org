@@ -9,14 +9,21 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="url", schema = "digital")
-public class Url {
+@Table(name="card-in-group", schema = "digital")
+public class CardInGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-    private String long_url;
     private int card_id;
-    private Date created_date;
-    private Date expires_date;
+    private int group_id;
+    private Date added_date;
+    private String added_by;
+
+    public CardInGroup() {
+
+    }
+
+
 }

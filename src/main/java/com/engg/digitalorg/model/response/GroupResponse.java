@@ -1,23 +1,18 @@
-package com.engg.digitalorg.model.entity;
+package com.engg.digitalorg.model.response;
 
 import com.engg.digitalorg.model.mapper.StringListConverter;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Convert;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
-@Table(name="group", schema = "digital")
-public class Group {
+public class GroupResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String name;
     private String description;
     private Date created_date;
@@ -28,6 +23,8 @@ public class Group {
     private Date updated_date;
     private String updated_by;
     private Boolean active;
+    private Boolean hasAdmin;
 
-    private String admin;
+    @Convert(converter = StringListConverter.class)
+    private List<String> admin;
 }

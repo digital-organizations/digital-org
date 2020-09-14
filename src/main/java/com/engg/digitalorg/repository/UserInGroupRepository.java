@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserInGroupRepository extends JpaRepository<UserInGroup, Integer> {
+public interface UserInGroupRepository extends JpaRepository<UserInGroup, Integer>, UserInGroupCustomRepository {
 
-    List<UserInGroup> findAllbyGroup(String groupName);
 
 }

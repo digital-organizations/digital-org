@@ -3,6 +3,7 @@ package com.engg.digitalorg.services;
 import com.engg.digitalorg.api.CardApi;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.CardManager;
+import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Icon;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.response.CardResponse;
@@ -33,7 +34,7 @@ public class CardService implements CardApi {
         if(!DigitalUtil.isValid(cardRequest.getCreated_by()) || !DigitalUtil.isValid(cardRequest.getUpdated_by())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(cardManager.createCard(cardRequest), HttpStatus.OK);
+        return new ResponseEntity<>(cardManager.createCard(cardRequest), HttpStatus.CREATED);
     }
 
     public ResponseEntity uplaodImage(int cardId, @RequestParam("file") MultipartFile file) throws IOException {
@@ -51,7 +52,11 @@ public class CardService implements CardApi {
     }
 
     @Override
-    public List<CardResponse> getAllCard() throws DigitalOrgException {
-        return cardManager.getAllCard();
+    public ResponseEntity deleteCard(int cardId, String email) throws DigitalOrgException {
+        Card card = cardManager.getCardById(cardId);
+        if(card.getCreated_by().equals(email)) {
+            cardManager.deleteCard(cardId);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

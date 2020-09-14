@@ -2,9 +2,13 @@ package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.entity.UserInGroup;
+import com.engg.digitalorg.model.mapper.StringListConverter;
+import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.response.CardResponse;
+import com.engg.digitalorg.model.response.GroupResponse;
 import com.engg.digitalorg.repository.GroupRepository;
 import com.engg.digitalorg.repository.UserInGroupRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,17 +39,26 @@ public class GroupManager {
         return groupRepository.findAllActiveGroup(true);
     }
 
-    public Group createGroup(Group group) {
-        return groupRepository.save(group);
+    public GroupResponse createGroup(GroupRequest groupRequest) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        Group group = modelMapper.map(groupRequest, Group.class);
+        group.setCreated_date(new Date());
+        group.setUpdated_date(new Date());
+        group.setActive(true);
+
+        ModelMapper resModelMapper = new ModelMapper();
+        GroupResponse groupResponse =resModelMapper.map(groupRepository.save(group), GroupResponse.class);
+        groupResponse.setHasAdmin(true);
+
+        StringListConverter stringListConverter = new StringListConverter();
+        groupResponse.setAdmin(stringListConverter.convertToEntityAttribute(group.getAdmin()));
+        return groupResponse;
     }
 
     public Group getGroupById(Integer cardId) {
         Optional<Group> group = groupRepository.findById(cardId);
         return group.get();
-    }
-
-    public Group updateGroup(Group group) {
-        return groupRepository.save(group);
     }
 
     public void deleteGroup(Integer groupId) {

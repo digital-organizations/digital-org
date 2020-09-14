@@ -87,7 +87,7 @@ public class CardManager {
     }
     */
 
-    public Card getCard(Integer cardId) {
+    public Card getCardById(Integer cardId) {
         Optional<Card> card = cardRepository.findById(cardId);
         return card.get();
     }
@@ -105,5 +105,9 @@ public class CardManager {
     public Icon downloadImage(int cardId) {
         Optional<Icon> icon = iconRepository.findById(cardId);
         return icon.get();
+    }
+
+    public void deleteCard(int cardId) {
+        cardRepository.deleteById(cardId);
     }
 }
