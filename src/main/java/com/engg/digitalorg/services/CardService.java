@@ -52,6 +52,18 @@ public class CardService implements CardApi {
     }
 
     @Override
+    public ResponseEntity<Resource> downloadImageocta(int cardId) throws IOException {
+        Icon icon = cardManager.downloadImage(cardId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        ByteArrayResource resource = new ByteArrayResource(icon.getFile());
+        return ResponseEntity.ok().headers(headers)
+                .contentType(MediaType.parseMediaType("application/octet-stream")).body(resource);
+    }
+
+    @Override
     public ResponseEntity deleteCard(int cardId, String email) throws DigitalOrgException {
         Card card = cardManager.getCardById(cardId);
         if(card.getCreated_by().equals(email)) {

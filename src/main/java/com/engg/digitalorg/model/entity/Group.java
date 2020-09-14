@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="group", schema = "digital")
+@Table(name="group", schema = "org")
 public class Group {
 
     @Id

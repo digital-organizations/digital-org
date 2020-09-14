@@ -37,6 +37,12 @@ public interface CardApi {
     @GetMapping(path = "/download/{card-id}")
     public ResponseEntity<IconResponse> downloadImage(@PathVariable("card-id") int cardId) throws IOException ;
 
+    @ApiOperation(value = "Download image", notes = "Download image for card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Bad Request")})
+    @GetMapping(path = "/download-octa/{card-id}")
+    public ResponseEntity<Resource> downloadImageocta(@PathVariable("card-id") int cardId) throws IOException ;
+
+
     @ApiOperation(value = "Delete card", notes = "Delete requested card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "Deleted", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Bad Request")})

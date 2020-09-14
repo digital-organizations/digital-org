@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="user-in-group", schema = "digital")
+@Table(name="user-in-group", schema = "org")
 public class UserInGroup {
 
     @Id

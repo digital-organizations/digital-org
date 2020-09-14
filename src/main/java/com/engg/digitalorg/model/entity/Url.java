@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="url", schema = "digital")
+@Table(name="url", schema = "org")
 public class Url {
 
     @Id

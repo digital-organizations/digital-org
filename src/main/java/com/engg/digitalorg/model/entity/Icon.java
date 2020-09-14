@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="icon", schema = "digital")
+@Table(name="icon", schema = "org")
 public class Icon {
 
     @Id
@@ -21,6 +21,10 @@ public class Icon {
     private int cardId;
     @Lob
     private byte[] file;
+
+    public Icon() {
+
+    }
 
     public Icon(String originalFilename, String contentType, byte[] compressBytes, int cardId) {
         this.name = originalFilename;
