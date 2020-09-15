@@ -1,6 +1,5 @@
 package com.engg.digitalorg.repository;
 
-import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.entity.UserInGroup;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

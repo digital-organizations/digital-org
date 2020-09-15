@@ -3,7 +3,6 @@ package com.engg.digitalorg.api;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.GroupRequest;
-import com.engg.digitalorg.model.response.GroupResponse;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +44,9 @@ public interface GroupApi {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = Group.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @PostMapping(path = "/remove-user-from-group", consumes = "application/json", produces = "application/json")
     ResponseEntity removeUserFromGroup(@ApiParam(value = "group object", required = true) @RequestBody String user, String admin,int groupId) throws DigitalOrgException;
+
+    @ApiOperation(value = "Get All group ", notes = "Get all group", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @GetMapping(path = "/all/{email}", produces = "application/json")
+    public ResponseEntity<List> getAllGroupService(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
 }

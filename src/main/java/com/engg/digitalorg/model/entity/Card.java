@@ -31,4 +31,7 @@ public class Card {
     private String group_name;
     private Boolean active;
 
+//    @Embedded
+//    private Group group;
+
 }

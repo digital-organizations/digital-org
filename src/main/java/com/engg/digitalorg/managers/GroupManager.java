@@ -4,7 +4,6 @@ import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.entity.UserInGroup;
 import com.engg.digitalorg.model.mapper.StringListConverter;
 import com.engg.digitalorg.model.request.GroupRequest;
-import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.GroupResponse;
 import com.engg.digitalorg.repository.GroupRepository;
 import com.engg.digitalorg.repository.UserInGroupRepository;
@@ -12,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +31,6 @@ public class GroupManager {
         return card.get();
     }
 
-    public List<Group> getAllGroup() {
-        return groupRepository.findAll();
-    }
 
     public List<Group> findAllActiveGroup() {
         return groupRepository.findAllActiveGroup(true);
@@ -79,5 +76,22 @@ public class GroupManager {
 
             return "";
         });
+    }
+
+    public List<GroupResponse> getAllGroupManager(String emailId) {
+        List<GroupResponse> groupList = groupRepository.findAll().stream()
+                .collect(Collectors.mapping(p -> new ModelMapper().map(p, GroupResponse.class), Collectors.toList()));
+
+        List<GroupResponse> groupResponseList = groupList.stream().map(groupResponse -> {
+            if(groupResponse.getCreated_by().equals(emailId)) {
+                groupResponse.setHasAdmin(true);
+            }
+            else {
+                groupResponse.setHasAdmin(false);
+            }
+            groupResponse.setAdmin(new ArrayList<>());
+            return groupResponse;
+        }).collect(Collectors.toList());
+        return groupResponseList;
     }
 }

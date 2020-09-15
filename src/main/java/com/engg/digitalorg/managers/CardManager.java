@@ -6,22 +6,15 @@ import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.IconRepository;
-import com.engg.digitalorg.util.DigitalMultipartFile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 
 @Component
 public class CardManager {
@@ -92,12 +85,6 @@ public class CardManager {
         return card.get();
     }
 
-    public List<CardResponse> getAllCard() {
-        List<CardResponse> cardList = cardRepository.findAll().stream()
-                .collect(Collectors.mapping(p -> new ModelMapper().map(p, CardResponse.class), Collectors.toList()));
-        return cardList;
-    }
-
     public void uplaodImage(Icon icon) {
         iconRepository.save(icon);
     }
@@ -110,4 +97,22 @@ public class CardManager {
     public void deleteCard(int cardId) {
         cardRepository.deleteById(cardId);
     }
+
+
+    public List<CardResponse> getAllCard(String emailId) {
+        List<CardResponse> cardList = cardRepository.findAll().stream()
+                .collect(Collectors.mapping(p -> new ModelMapper().map(p, CardResponse.class), Collectors.toList()));
+
+        List<CardResponse> cardResponseList = cardList.stream().map(cardResponse -> {
+            if(cardResponse.getCreated_by().equals(emailId)) {
+                cardResponse.setHasAdmin(true);
+            }
+            else {
+                cardResponse.setHasAdmin(false);
+            }
+            return cardResponse;
+        }).collect(Collectors.toList());
+        return cardResponseList;
+    }
+
 }

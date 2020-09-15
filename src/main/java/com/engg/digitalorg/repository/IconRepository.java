@@ -1,6 +1,5 @@
 package com.engg.digitalorg.repository;
 
-import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Icon;
 import org.springframework.data.jpa.repository.JpaRepository;
 

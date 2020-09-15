@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class Icon {
 
     private String name;
     private String type;
-    private int cardId;
+    private int card_id;
     @Lob
     private byte[] file;
 
@@ -30,6 +29,6 @@ public class Icon {
         this.name = originalFilename;
         this.type = contentType;
         this.file = compressBytes;
-        this.cardId = cardId;
+        this.card_id = cardId;
     }
 }

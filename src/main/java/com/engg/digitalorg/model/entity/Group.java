@@ -1,17 +1,16 @@
 package com.engg.digitalorg.model.entity;
 
-import com.engg.digitalorg.model.mapper.StringListConverter;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name="group", schema = "org")
+//@Embeddable
 public class Group {
 
     @Id

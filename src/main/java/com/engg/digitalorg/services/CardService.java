@@ -1,5 +1,6 @@
 package com.engg.digitalorg.services;
 
+import co.elastic.apm.api.CaptureSpan;
 import com.engg.digitalorg.api.CardApi;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.CardManager;
@@ -47,7 +48,7 @@ public class CardService implements CardApi {
     @Override
     public ResponseEntity<IconResponse> downloadImage(int cardId) throws IOException {
         Icon icon = cardManager.downloadImage(cardId);
-        IconResponse iconResponse = new IconResponse(icon.getName(), icon.getType(), DigitalUtil.decompressBytes(icon.getFile()), icon.getCardId(), icon.getId());
+        IconResponse iconResponse = new IconResponse(icon.getName(), icon.getType(), DigitalUtil.decompressBytes(icon.getFile()), icon.getCard_id(), icon.getId());
         return new ResponseEntity<>(iconResponse, HttpStatus.OK);
     }
 
@@ -71,4 +72,11 @@ public class CardService implements CardApi {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @Override
+    @CaptureSpan(value = "getAllcard", type = "service", subtype = "http")
+    public ResponseEntity<List> getAllcard(String email) throws DigitalOrgException {
+        return new ResponseEntity<>(cardManager.getAllCard(email), HttpStatus.OK);
+    }
+
 }

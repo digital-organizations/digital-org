@@ -1,7 +1,6 @@
 package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
-import com.engg.digitalorg.model.entity.Icon;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.IconResponse;
@@ -47,6 +46,10 @@ public interface CardApi {
     @ApiResponses(value = {@ApiResponse(code = 204, message = "Deleted", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Bad Request")})
     @DeleteMapping(path = "/{card-id}/{email}", produces = "application/json")
-    ResponseEntity deleteCard(@PathVariable("card-id") int cardId, @PathVariable("card-id") String email) throws DigitalOrgException;
+    ResponseEntity deleteCard(@PathVariable("card-id") int cardId, @PathVariable("email") String email) throws DigitalOrgException;
 
+    @ApiOperation(value = "Get All cards ", notes = "Get all card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @GetMapping(path = "/all/{email}", produces = "application/json")
+    public ResponseEntity<List> getAllcard(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
 }

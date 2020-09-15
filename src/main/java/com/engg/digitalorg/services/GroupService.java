@@ -1,19 +1,16 @@
 package com.engg.digitalorg.services;
 
+import co.elastic.apm.api.CaptureSpan;
 import com.engg.digitalorg.api.GroupApi;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.GroupRequest;
-import com.engg.digitalorg.model.response.CardResponse;
-import com.engg.digitalorg.model.response.GroupResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController("GroupService")
@@ -63,5 +60,11 @@ public class GroupService implements GroupApi {
         //        TODO : validation : admin is valid admin for given group
         groupManager.removeUserToGroup(user, groupManager.getGroupById(groupId).getName(), admin);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    @CaptureSpan(value = "getAllcard", type = "service", subtype = "http")
+    public ResponseEntity<List> getAllGroupService(String email) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.getAllGroupManager(email), HttpStatus.OK);
     }
 }
