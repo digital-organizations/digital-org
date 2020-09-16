@@ -8,4 +8,6 @@ public interface GroupCustomRepository {
 
     List<Group> findAllActiveGroup(Boolean flag);
 
+    void removeCardFromGroup(int cardId);
+
 }

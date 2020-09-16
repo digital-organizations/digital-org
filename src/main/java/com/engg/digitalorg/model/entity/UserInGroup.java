@@ -3,25 +3,20 @@ package com.engg.digitalorg.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name="user-in-group", schema = "org")
+@Table(name="user_in_group", schema = "digital")
 public class UserInGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-
     private String email;
-    private String group_name;
+    private int group_id;
     private Date added_date;
     private String added_by;
 
@@ -29,10 +24,10 @@ public class UserInGroup {
 
     }
 
-    public UserInGroup(String user, String groupName, String admin) {
+    public UserInGroup(String user, int group_id, String admin) {
         super();
         this.email = user;
-        this.group_name = groupName;
+        this.group_id = group_id;
         this.added_by = admin;
     }
 

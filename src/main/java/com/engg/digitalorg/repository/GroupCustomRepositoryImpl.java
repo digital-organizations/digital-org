@@ -1,5 +1,6 @@
 package com.engg.digitalorg.repository;
 
+import com.engg.digitalorg.model.entity.CardInGroup;
 import com.engg.digitalorg.model.entity.Group;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,13 @@ public class GroupCustomRepositoryImpl implements GroupCustomRepository{
         query.setParameter(1, flag);
         return query.getResultList();
     }
+
+    @Override
+    public void removeCardFromGroup(int cardId) {
+        Query query = entityManager.createNativeQuery("DELETE FROM digital.card_in_group as cig WHERE cig.card_id = ?", CardInGroup.class);
+        query.setParameter(1, cardId);
+        query.getResultList();
+    }
+
 
 }

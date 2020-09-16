@@ -2,9 +2,13 @@ package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.model.request.CardRequest;
+import com.engg.digitalorg.model.request.CardUpdateRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.IconResponse;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,12 @@ public interface CardApi {
                            @ApiResponse(code = 400, message = "Invalid Request")})
     @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     ResponseEntity createCard(@RequestBody CardRequest cardRequest) throws DigitalOrgException, IOException;
+
+    @ApiOperation(value = "Update existing card", notes = "User to update existing card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class),
+            @ApiResponse(code = 400, message = "Invalid Request")})
+    @PatchMapping(path = "/update", consumes = "application/json", produces = "application/json")
+    ResponseEntity updateCard(@RequestBody CardUpdateRequest cardRequest) throws DigitalOrgException, IOException;
 
     @ApiOperation(value = "Upload Image", notes = "Upload custom image", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class),
@@ -50,6 +60,6 @@ public interface CardApi {
 
     @ApiOperation(value = "Get All cards ", notes = "Get all card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
-    @GetMapping(path = "/all/{email}", produces = "application/json")
-    public ResponseEntity<List> getAllcard(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
+    @PostMapping(path = "/all", produces = "application/json")
+    public ResponseEntity<List> getAllcard(@RequestBody String email) throws DigitalOrgException;
 }

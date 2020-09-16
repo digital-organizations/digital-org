@@ -52,7 +52,6 @@ public class CardServiceTest {
         cardRequest.setTeam("team");
         cardRequest.setComponent("component");
         cardRequest.setUpdated_by("updated_by");
-        cardRequest.setGroup_name("group_name");
 
         // Configure CardManager.createCard(...).
         final CardResponse response = new CardResponse();
@@ -87,7 +86,6 @@ public class CardServiceTest {
         cardRequest.setTeam("team");
         cardRequest.setComponent("component");
         cardRequest.setUpdated_by("updated_by");
-        cardRequest.setGroup_name("group_name");
 
         when(mockCardManager.createCard(any(CardRequest.class))).thenThrow(IOException.class);
 
@@ -121,7 +119,7 @@ public class CardServiceTest {
         // Setup
 
         // Configure CardManager.downloadImage(...).
-        final Icon icon = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon = new Icon("originalFilename", "contentType", 0, "content".getBytes());
         when(mockCardManager.downloadImage(0)).thenReturn(icon);
 
         // Run the test
@@ -135,7 +133,7 @@ public class CardServiceTest {
         // Setup
 
         // Configure CardManager.downloadImage(...).
-        final Icon icon = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon = new Icon("originalFilename", "contentType", 0, "content".getBytes());
         when(mockCardManager.downloadImage(0)).thenReturn(icon);
 
         // Run the test
@@ -147,7 +145,7 @@ public class CardServiceTest {
         // Setup
 
         // Configure CardManager.downloadImage(...).
-        final Icon icon = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon = new Icon("originalFilename", "contentType", 0, "content".getBytes());
         when(mockCardManager.downloadImage(0)).thenReturn(icon);
 
         // Run the test
@@ -161,7 +159,7 @@ public class CardServiceTest {
         // Setup
 
         // Configure CardManager.downloadImage(...).
-        final Icon icon = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon = new Icon("originalFilename", "contentType", 0, "content".getBytes());
         when(mockCardManager.downloadImage(0)).thenReturn(icon);
 
         // Run the test
@@ -177,9 +175,7 @@ public class CardServiceTest {
         card.setId(0);
         card.setTitle("title");
         card.setDescription("description");
-        card.setOriginal_url("original_url");
-        card.setShort_url("short_url");
-        card.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setUrl_id(12);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card.setCreated_by("created_by");
         card.setTribe("tribe");
@@ -202,9 +198,7 @@ public class CardServiceTest {
         card.setId(0);
         card.setTitle("title");
         card.setDescription("description");
-        card.setOriginal_url("original_url");
-        card.setShort_url("short_url");
-        card.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setUrl_id(12);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card.setCreated_by("created_by");
         card.setTribe("tribe");

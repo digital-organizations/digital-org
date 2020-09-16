@@ -1,119 +1,85 @@
+drop schema if exists digital cascade;
+
 create schema digital;
 
 create table digital.card
 (
-    id           bigint not null
-        constraint card_pkey
-            primary key,
-    active       boolean,
+    id           SERIAL PRIMARY KEY,
+    title        varchar,
+    description  varchar,
+    tribe        varchar,
+    team         varchar,
     component    varchar,
     created_by   varchar,
-    created_date timestamp,
-    description  varchar,
-    expire_date  timestamp,
-    group_name   varchar,
-    original_url varchar,
-    short_url    varchar,
-    team         varchar,
-    title        varchar,
-    tribe        varchar,
     updated_by   varchar,
-    updated_date timestamp
+    created_date timestamp,
+    updated_date timestamp,
+    active       boolean,
+    url_id       int,
+    icon_id      int
 );
 
 create table digital.group
 (
-    id           bigint not null
-        constraint group_pkey
-            primary key,
-    created_by   varchar,
-    created_date timestamp,
-    description  varchar,
+    id           SERIAL PRIMARY KEY,
     name         varchar,
-    updated_by   varchar,
-    updated_date timestamp,
-    component    varchar,
-    team         varchar,
+    description  varchar,
     tribe        varchar,
-    active       boolean,
-    admin        varchar
+    team         varchar,
+    component    varchar,
+    created_by   varchar,
+    updated_by   varchar,
+    created_date timestamp,
+    updated_date timestamp,
+    active       boolean
 );
+
 
 create table digital.user
 (
-    id     integer not null
-        constraint user_pkey
-            primary key,
+    id     SERIAL PRIMARY KEY,
+    name   varchar,
     email  varchar,
-    active boolean not null
+    active boolean
 );
 
 create table digital.icon
 (
-	id serial not null,
-	name varchar,
-	type varchar,
-	card_id int,
-	file oid
+    id      SERIAL PRIMARY KEY,
+    name    varchar,
+    type    varchar,
+    card_id int references digital.card(id),
+    file    oid
 );
 
 
-create unique index icon_id_uindex
-	on digital.icon (id);
-
-alter table digital.icon
-	add constraint icon_pk
-		primary key (id);
-
------------------------------------------------
-
-create table digital."user-in-group"
+create table digital.user_in_group
 (
-	id serial not null,
-	email varchar,
-	group_name varchar,
-	added_date date,
-	added_by varchar
+    id         SERIAL PRIMARY KEY,
+    email      varchar,
+    group_id   int references digital.group(id),
+    added_date date,
+    added_by   varchar
 );
 
-create unique index "user-in-group_id_uindex"
-	on digital."user-in-group" (id);
-
-alter table digital."user-in-group"
-	add constraint "user-in-group_pk"
-		primary key (id);
-
---------------------------------------------
 
 create table digital.url
 (
-	id serial not null,
-	long_url varchar,
-	created_date date,
-	expires_date date
+    id           SERIAL PRIMARY KEY,
+    long_url     varchar,
+    created_date date,
+    card_id      int references digital.card(id),
+    short_url    varchar,
+    expires_date date
 );
 
-create unique index url_id_uindex
-	on digital.url (id);
 
-alter table digital.url
-	add constraint url_pk
-		primary key (id);
-
---------------------------------------
-
-create table digital."card-in-group"
+create table digital.card_in_group
 (
-	id serial not null,
-	card_id int,
-	group_id int,
-	added_date date,
-	added_by varchar
+    id         SERIAL PRIMARY KEY,
+    card_id    int references digital.card(id),
+    group_id   int references digital.group(id),
+    added_date date,
+    added_by   varchar
 );
 
-create unique index "card-in-group_id_uindex"
-	on digital."card-in-group" (id);
-
-alter table digital."card-in-group"
-	add constraint "card-in-group_pk"
-		primary key (id);

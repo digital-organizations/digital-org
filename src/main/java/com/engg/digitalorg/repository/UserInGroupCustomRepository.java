@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface UserInGroupCustomRepository {
 
-    List<UserInGroup> findAllbyGroup(String groupName);
+    List<UserInGroup> findAllUserInGroupByGroupName(String groupName);
+
+    List<UserInGroup> findAllUserInGroupByGroupID(int groupId);
 }

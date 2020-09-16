@@ -2,6 +2,7 @@ package com.engg.digitalorg.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Pattern;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -9,7 +10,7 @@ import java.util.zip.Inflater;
 
 public class DigitalUtil {
 
-    public static boolean isValid(String email)
+    public static boolean isEmailValid(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
@@ -20,6 +21,17 @@ public class DigitalUtil {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
+    }
+
+    public static boolean isUrlValid(String url)
+    {
+        try {
+            new URL(url).toURI();
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     // compress the image bytes before storing it in the database

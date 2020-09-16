@@ -4,6 +4,7 @@ import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.GroupRequest;
+import com.engg.digitalorg.model.request.GroupUpdateRequest;
 import com.engg.digitalorg.model.response.GroupResponse;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -45,7 +46,6 @@ public class GroupServiceTest {
         groupRequest.setTeam("team");
         groupRequest.setComponent("component");
         groupRequest.setUpdated_by("updated_by");
-        groupRequest.setAdmin(Arrays.asList("value"));
 
         // Configure GroupManager.createGroup(...).
         final GroupResponse groupResponse = new GroupResponse();
@@ -78,7 +78,6 @@ public class GroupServiceTest {
         groupRequest.setTeam("team");
         groupRequest.setComponent("component");
         groupRequest.setUpdated_by("updated_by");
-        groupRequest.setAdmin(Arrays.asList("value"));
 
         // Configure GroupManager.createGroup(...).
         final GroupResponse groupResponse = new GroupResponse();
@@ -147,15 +146,13 @@ public class GroupServiceTest {
     @Test
     public void testUpdateGroup() {
         // Setup
-        final GroupRequest groupRequest = new GroupRequest();
+        final GroupUpdateRequest groupRequest = new GroupUpdateRequest();
         groupRequest.setName("name");
         groupRequest.setDescription("description");
-        groupRequest.setCreated_by("created_by");
         groupRequest.setTribe("tribe");
         groupRequest.setTeam("team");
         groupRequest.setComponent("component");
         groupRequest.setUpdated_by("updated_by");
-        groupRequest.setAdmin(Arrays.asList("value"));
 
         // Configure GroupManager.getGroupById(...).
         final Group group = new Group();
@@ -186,7 +183,7 @@ public class GroupServiceTest {
         when(mockGroupManager.createGroup(any(GroupRequest.class))).thenReturn(groupResponse);
 
         // Run the test
-        final ResponseEntity result = groupServiceUnderTest.updateGroup(groupRequest, 0);
+        final ResponseEntity result = groupServiceUnderTest.updateGroup(groupRequest);
 
         // Verify the results
     }
@@ -194,15 +191,13 @@ public class GroupServiceTest {
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testUpdateGroup_ThrowsDigitalOrgException() {
         // Setup
-        final GroupRequest groupRequest = new GroupRequest();
+        final GroupUpdateRequest groupRequest = new GroupUpdateRequest();
         groupRequest.setName("name");
         groupRequest.setDescription("description");
-        groupRequest.setCreated_by("created_by");
         groupRequest.setTribe("tribe");
         groupRequest.setTeam("team");
         groupRequest.setComponent("component");
         groupRequest.setUpdated_by("updated_by");
-        groupRequest.setAdmin(Arrays.asList("value"));
 
         // Configure GroupManager.getGroupById(...).
         final Group group = new Group();
@@ -233,26 +228,7 @@ public class GroupServiceTest {
         when(mockGroupManager.createGroup(any(GroupRequest.class))).thenReturn(groupResponse);
 
         // Run the test
-        groupServiceUnderTest.updateGroup(groupRequest, 0);
-    }
-
-    @Test
-    public void testDeleteGroup() {
-        // Setup
-
-        // Run the test
-        groupServiceUnderTest.deleteGroup(0);
-
-        // Verify the results
-        verify(mockGroupManager).deleteGroup(0);
-    }
-
-    @Test(expectedExceptions = {DigitalOrgException.class})
-    public void testDeleteGroup_ThrowsDigitalOrgException() {
-        // Setup
-
-        // Run the test
-        groupServiceUnderTest.deleteGroup(0);
+        groupServiceUnderTest.updateGroup(groupRequest);
     }
 
     @Test
@@ -277,7 +253,7 @@ public class GroupServiceTest {
         final ResponseEntity result = groupServiceUnderTest.addUserToGroup("user", "admin", 0);
 
         // Verify the results
-        verify(mockGroupManager).addUserToGroup("user", "groupName", "admin");
+        verify(mockGroupManager).addUserToGroup("user", "groupName", 1);
     }
 
     @Test(expectedExceptions = {DigitalOrgException.class})
@@ -321,10 +297,10 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        final ResponseEntity result = groupServiceUnderTest.removeUserFromGroup("user", "admin", 0);
+        final ResponseEntity result = groupServiceUnderTest.removeUserFromGroup("user",  0);
 
         // Verify the results
-        verify(mockGroupManager).removeUserToGroup("user", "groupName", "admin");
+        verify(mockGroupManager).removeUserToGroup("user", 1);
     }
 
     @Test(expectedExceptions = {DigitalOrgException.class})
@@ -346,7 +322,7 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        groupServiceUnderTest.removeUserFromGroup("user", "admin", 0);
+        groupServiceUnderTest.removeUserFromGroup("user", 0);
     }
 
     @Test

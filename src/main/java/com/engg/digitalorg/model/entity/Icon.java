@@ -3,22 +3,16 @@ package com.engg.digitalorg.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Lob;
+import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name="icon", schema = "org")
+@Table(name="icon", schema = "digital")
 public class Icon {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-
     private String name;
     private String type;
     private int card_id;
@@ -29,10 +23,10 @@ public class Icon {
 
     }
 
-    public Icon(String originalFilename, String contentType, byte[] compressBytes, int cardId) {
+    public Icon(String originalFilename, String contentType, int cardId, byte[] compressBytes ) {
         this.name = originalFilename;
         this.type = contentType;
-        this.file = compressBytes;
         this.card_id = cardId;
+        this.file = compressBytes;
     }
 }

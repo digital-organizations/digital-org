@@ -11,14 +11,21 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class UserInGroupCustomRepositoryImpl implements UserInGroupCustomRepository{
+public class UserInGroupCustomRepositoryImpl implements UserInGroupCustomRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<UserInGroup> findAllbyGroup(String groupName) {
-        Query query = entityManager.createNativeQuery("SELECT uig.* FROM digital.user-in-group as uig WHERE uig.group_name = ?", UserInGroup.class);
+    public List<UserInGroup> findAllUserInGroupByGroupName(String groupName) {
+        Query query = entityManager.createNativeQuery("SELECT uig.* FROM digital.user_in_group as uig WHERE uig.group_id = ?", UserInGroup.class);
         query.setParameter(1, groupName);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<UserInGroup> findAllUserInGroupByGroupID(int groupId) {
+        Query query = entityManager.createNativeQuery("SELECT uig.* FROM digital.user_in_group as uig WHERE uig.group_id = ?", UserInGroup.class);
+        query.setParameter(1, groupId);
         return query.getResultList();
     }
 }

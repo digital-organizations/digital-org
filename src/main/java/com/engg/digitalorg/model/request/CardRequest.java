@@ -12,11 +12,9 @@ public class CardRequest {
     private String description;
     private String original_url;
     private Date expire_date;
-    private String created_by;
     private String tribe;
     private String team;
     private String component;
+    private String created_by;
     private String updated_by;
-    private String group_name;
-    private Boolean active;
 }

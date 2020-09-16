@@ -5,13 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GroupRequest {
+public class GroupUpdateRequest {
 
+    private int id;
     private String name;
     private String description;
     private String tribe;
     private String team;
     private String component;
-    private String created_by;
     private String updated_by;
 }

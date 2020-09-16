@@ -59,31 +59,6 @@ public class GroupManagerTest {
     }
 
     @Test
-    public void testFindAllActiveGroup() {
-        // Setup
-
-        // Configure GroupRepository.findAllActiveGroup(...).
-        final Group group = new Group();
-        group.setId(0);
-        group.setName("name");
-        group.setDescription("description");
-        group.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        group.setCreated_by("created_by");
-        group.setTribe("tribe");
-        group.setTeam("team");
-        group.setComponent("component");
-        group.setUpdated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        group.setUpdated_by("updated_by");
-        final List<Group> groups = Arrays.asList(group);
-        when(mockGroupRepository.findAllActiveGroup(false)).thenReturn(groups);
-
-        // Run the test
-        final List<Group> result = groupManagerUnderTest.findAllActiveGroup();
-
-        // Verify the results
-    }
-
-    @Test
     public void testCreateGroup() {
         // Setup
         final GroupRequest groupRequest = new GroupRequest();
@@ -94,7 +69,6 @@ public class GroupManagerTest {
         groupRequest.setTeam("team");
         groupRequest.setComponent("component");
         groupRequest.setUpdated_by("updated_by");
-        groupRequest.setAdmin(Arrays.asList("value"));
 
         // Configure GroupRepository.save(...).
         final Group group = new Group();
@@ -142,26 +116,15 @@ public class GroupManagerTest {
     }
 
     @Test
-    public void testDeleteGroup() {
-        // Setup
-
-        // Run the test
-        groupManagerUnderTest.deleteGroup(0);
-
-        // Verify the results
-        verify(mockGroupRepository).deleteById(0);
-    }
-
-    @Test
     public void testAddUserToGroup() {
         // Setup
 
         // Configure UserInGroupRepository.save(...).
-        final UserInGroup userInGroup = new UserInGroup("user", "groupName", "admin");
+        final UserInGroup userInGroup = new UserInGroup("user",1, "admin");
         when(mockUserInGroupRepository.save(any(UserInGroup.class))).thenReturn(userInGroup);
 
         // Run the test
-        groupManagerUnderTest.addUserToGroup("user", "groupName", "admin");
+        groupManagerUnderTest.addUserToGroup("user", "groupName", 1);
 
         // Verify the results
     }
@@ -171,11 +134,11 @@ public class GroupManagerTest {
         // Setup
 
         // Configure UserInGroupRepository.findAllbyGroup(...).
-        final List<UserInGroup> userInGroups = Arrays.asList(new UserInGroup("user", "groupName", "admin"));
-        when(mockUserInGroupRepository.findAllbyGroup("groupName")).thenReturn(userInGroups);
+        final List<UserInGroup> userInGroups = Arrays.asList(new UserInGroup("user", 1, "admin"));
+        when(mockUserInGroupRepository.findAllUserInGroupByGroupID(1)).thenReturn(userInGroups);
 
         // Run the test
-        groupManagerUnderTest.removeUserToGroup("user", "groupName", "admin");
+        groupManagerUnderTest.removeUserToGroup("user",  1);
 
         // Verify the results
         verify(mockUserInGroupRepository).deleteById(0);

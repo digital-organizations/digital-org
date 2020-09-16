@@ -3,23 +3,18 @@ package com.engg.digitalorg.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name="card-in-group", schema = "org")
+@Table(name="card_in_group", schema = "digital")
 public class CardInGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-
     private int card_id;
     private int group_id;
     private Date added_date;

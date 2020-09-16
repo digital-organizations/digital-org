@@ -47,16 +47,13 @@ public class CardManagerTest {
         cardRequest.setTeam("team");
         cardRequest.setComponent("component");
         cardRequest.setUpdated_by("updated_by");
-        cardRequest.setGroup_name("group_name");
 
         // Configure CardRepository.save(...).
         final Card card = new Card();
         card.setId(0);
         card.setTitle("title");
         card.setDescription("description");
-        card.setOriginal_url("original_url");
-        card.setShort_url("short_url");
-        card.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setUrl_id(23);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card.setCreated_by("created_by");
         card.setTribe("tribe");
@@ -82,16 +79,13 @@ public class CardManagerTest {
         cardRequest.setTeam("team");
         cardRequest.setComponent("component");
         cardRequest.setUpdated_by("updated_by");
-        cardRequest.setGroup_name("group_name");
 
         // Configure CardRepository.save(...).
         final Card card = new Card();
         card.setId(0);
         card.setTitle("title");
         card.setDescription("description");
-        card.setOriginal_url("original_url");
-        card.setShort_url("short_url");
-        card.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setUrl_id(3);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card.setCreated_by("created_by");
         card.setTribe("tribe");
@@ -111,9 +105,7 @@ public class CardManagerTest {
         card1.setId(0);
         card1.setTitle("title");
         card1.setDescription("description");
-        card1.setOriginal_url("original_url");
-        card1.setShort_url("short_url");
-        card1.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card1.setUrl_id(90);
         card1.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card1.setCreated_by("created_by");
         card1.setTribe("tribe");
@@ -130,10 +122,10 @@ public class CardManagerTest {
     @Test
     public void testUplaodImage() {
         // Setup
-        final Icon icon = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon = new Icon("originalFilename", "contentType", 0, "content".getBytes());
 
         // Configure IconRepository.save(...).
-        final Icon icon1 = new Icon("originalFilename", "contentType", "content".getBytes(), 0);
+        final Icon icon1 = new Icon("originalFilename", "contentType", 0, "content".getBytes());
         when(mockIconRepository.save(any(Icon.class))).thenReturn(icon1);
 
         // Run the test
@@ -147,7 +139,7 @@ public class CardManagerTest {
         // Setup
 
         // Configure IconRepository.findById(...).
-        final Optional<Icon> icon = Optional.of(new Icon("originalFilename", "contentType", "content".getBytes(), 0));
+        final Optional<Icon> icon = Optional.of(new Icon("originalFilename", "contentType", 0, "content".getBytes()));
         when(mockIconRepository.findById(0)).thenReturn(icon);
 
         // Run the test
@@ -176,9 +168,7 @@ public class CardManagerTest {
         card.setId(0);
         card.setTitle("title");
         card.setDescription("description");
-        card.setOriginal_url("original_url");
-        card.setShort_url("short_url");
-        card.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setUrl_id(45);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         card.setCreated_by("created_by");
         card.setTribe("tribe");

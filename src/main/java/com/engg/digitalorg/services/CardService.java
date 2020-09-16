@@ -7,6 +7,7 @@ import com.engg.digitalorg.managers.CardManager;
 import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Icon;
 import com.engg.digitalorg.model.request.CardRequest;
+import com.engg.digitalorg.model.request.CardUpdateRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.IconResponse;
 import com.engg.digitalorg.util.DigitalUtil;
@@ -32,15 +33,17 @@ public class CardService implements CardApi {
 
     @Override
     public ResponseEntity<CardResponse> createCard(CardRequest cardRequest) throws DigitalOrgException, IOException {
-        if(!DigitalUtil.isValid(cardRequest.getCreated_by()) || !DigitalUtil.isValid(cardRequest.getUpdated_by())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(cardManager.createCard(cardRequest), HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity updateCard(CardUpdateRequest cardRequest) throws DigitalOrgException, IOException {
+        return new ResponseEntity<>(cardManager.updateCard(cardRequest), HttpStatus.OK);
     }
 
     public ResponseEntity uplaodImage(int cardId, @RequestParam("file") MultipartFile file) throws IOException {
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
-        Icon icon = new Icon(file.getOriginalFilename(), file.getContentType(), DigitalUtil.compressBytes(file.getBytes()),cardId);
+        Icon icon = new Icon(file.getOriginalFilename(), file.getContentType(), cardId, DigitalUtil.compressBytes(file.getBytes()));
         cardManager.uplaodImage(icon);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -60,8 +63,7 @@ public class CardService implements CardApi {
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
         ByteArrayResource resource = new ByteArrayResource(icon.getFile());
-        return ResponseEntity.ok().headers(headers)
-                .contentType(MediaType.parseMediaType("application/octet-stream")).body(resource);
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/octet-stream")).body(resource);
     }
 
     @Override
@@ -70,11 +72,14 @@ public class CardService implements CardApi {
         if(card.getCreated_by().equals(email)) {
             cardManager.deleteCard(cardId);
         }
+        else {
+            throw new DigitalOrgException("You are not an admin of this group.");
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    @CaptureSpan(value = "getAllcard", type = "service", subtype = "http")
+    @CaptureSpan(value = "getAllCard", type = "service", subtype = "http")
     public ResponseEntity<List> getAllcard(String email) throws DigitalOrgException {
         return new ResponseEntity<>(cardManager.getAllCard(email), HttpStatus.OK);
     }
