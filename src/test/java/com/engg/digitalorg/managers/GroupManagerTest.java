@@ -18,6 +18,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * The type Group manager test.
+ */
 public class GroupManagerTest {
 
     @Mock
@@ -28,11 +31,17 @@ public class GroupManagerTest {
     @InjectMocks
     private GroupManager groupManagerUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test get group.
+     */
     @Test
     public void testGetGroup() {
         // Setup
@@ -58,6 +67,9 @@ public class GroupManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test create group.
+     */
     @Test
     public void testCreateGroup() {
         // Setup
@@ -90,6 +102,9 @@ public class GroupManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test get group by id.
+     */
     @Test
     public void testGetGroupById() {
         // Setup
@@ -115,6 +130,9 @@ public class GroupManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test add user to group.
+     */
     @Test
     public void testAddUserToGroup() {
         // Setup
@@ -129,6 +147,9 @@ public class GroupManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test remove user to group.
+     */
     @Test
     public void testRemoveUserToGroup() {
         // Setup
@@ -144,6 +165,9 @@ public class GroupManagerTest {
         verify(mockUserInGroupRepository).deleteById(0);
     }
 
+    /**
+     * Test get all group manager.
+     */
     @Test
     public void testGetAllGroupManager() {
         // Setup

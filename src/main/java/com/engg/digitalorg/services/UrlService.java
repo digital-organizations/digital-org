@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+/**
+ * The type Url service.
+ */
 @RestController("UrlService")
 public class UrlService implements UrlApi {
 

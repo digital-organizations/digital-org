@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * The type Group service.
+ */
 @RestController("GroupService")
 public class GroupService implements GroupApi {
 

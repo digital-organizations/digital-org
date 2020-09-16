@@ -7,14 +7,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+/**
+ * The type Digital org application.
+ */
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableJpaRepositories(basePackages = "com.engg.digitalorg.repository")
 public class DigitalOrgApplication {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(DigitalOrgApplication.class, args);
     }
 
+    /**
+     * Multipart resolver commons multipart resolver.
+     *
+     * @return the commons multipart resolver
+     */
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();

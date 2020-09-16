@@ -10,36 +10,84 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The interface Group api.
+ */
 @RequestMapping("/group")
 @Api(tags = "Group Services", description = "Group Api")
 @CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
 public interface GroupApi {
 
+    /**
+     * Create group response entity.
+     *
+     * @param group the group
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "Create new group", notes = "User to create New group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Bad Request")})
     @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     ResponseEntity createGroup(@ApiParam(value = "group object", required = true) @RequestBody GroupRequest group) throws DigitalOrgException;
 
+    /**
+     * Update group response entity.
+     *
+     * @param group the group
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "Update existing group", notes = "User to create New group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Bad Request")})
     @PatchMapping(path = "/update", consumes = "application/json", produces = "application/json")
     ResponseEntity updateGroup(@RequestBody GroupUpdateRequest group) throws DigitalOrgException;
 
+    /**
+     * Gets groupby id.
+     *
+     * @param cardId the card id
+     * @return the groupby id
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "delete group", notes = "delete Group", response = Group.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = Group.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @GetMapping(path = "/{group-id}", produces = "application/json")
     public Group getGroupbyId(@ApiParam(value = "group object", required = true) @PathVariable("card-id") Integer cardId) throws DigitalOrgException;
 
+    /**
+     * Add user to group response entity.
+     *
+     * @param userEmail  the user email
+     * @param adminEmail the admin email
+     * @param groupId    the group id
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "add user to group", notes = "add user to group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @PostMapping(path = "/user-to-group", consumes = "application/json", produces = "application/json")
     ResponseEntity addUserToGroup(@ApiParam(value = "email", required = true) @RequestBody String userEmail, String adminEmail, int groupId) throws DigitalOrgException;
 
+    /**
+     * Remove user from group response entity.
+     *
+     * @param email   the email
+     * @param groupId the group id
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "remove user from group", notes = "remove User from group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @DeleteMapping(path = "/user-from-group", consumes = "application/json", produces = "application/json")
     ResponseEntity removeUserFromGroup(@ApiParam(value = "email", required = true) @RequestBody String email, int groupId) throws DigitalOrgException;
 
+    /**
+     * Gets all group service.
+     *
+     * @param email the email
+     * @return the all group service
+     * @throws DigitalOrgException the digital org exception
+     */
     @ApiOperation(value = "Get All group ", notes = "Get all group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @GetMapping(path = "/all/{email}", produces = "application/json")

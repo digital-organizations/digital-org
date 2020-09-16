@@ -4,55 +4,55 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * The type Digital org exception.
+ * The type Bad request exception.
  */
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public class DigitalOrgException extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
     /**
-     * Instantiates a new Digital org exception.
+     * Instantiates a new Bad request exception.
      */
-    public DigitalOrgException() {
+    public BadRequestException() {
 
     }
 
     /**
-     * Instantiates a new Digital org exception.
+     * Instantiates a new Bad request exception.
      *
      * @param message the message
      */
-    public DigitalOrgException(String message) {
+    public BadRequestException(String message) {
         super(message);
     }
 
     /**
-     * Instantiates a new Digital org exception.
+     * Instantiates a new Bad request exception.
      *
      * @param message the message
      * @param cause   the cause
      */
-    public DigitalOrgException(String message, Throwable cause) {
+    public BadRequestException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Instantiates a new Digital org exception.
+     * Instantiates a new Bad request exception.
      *
      * @param cause the cause
      */
-    public DigitalOrgException(Throwable cause) {
+    public BadRequestException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Instantiates a new Digital org exception.
+     * Instantiates a new Bad request exception.
      *
      * @param message            the message
      * @param cause              the cause
      * @param enableSupression   the enable supression
      * @param writableStackTrace the writable stack trace
      */
-    public DigitalOrgException(String message, Throwable cause, boolean enableSupression, boolean writableStackTrace) {
+    public BadRequestException(String message, Throwable cause, boolean enableSupression, boolean writableStackTrace) {
         super(message, cause, enableSupression, writableStackTrace);
     }
 }

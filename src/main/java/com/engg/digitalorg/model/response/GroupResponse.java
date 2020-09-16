@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * The type Group response.
+ */
 @Getter
 @Setter
 public class GroupResponse {

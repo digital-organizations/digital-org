@@ -6,10 +6,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * The type Url.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name="url", schema = "digital")
+@Table(name = "url", schema = "digital")
 public class Url {
 
     @Id

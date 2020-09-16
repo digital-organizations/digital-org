@@ -6,10 +6,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * The type Card in group.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name="card_in_group", schema = "digital")
+@Table(name = "card_in_group", schema = "digital")
 public class CardInGroup {
 
     @Id
@@ -20,6 +23,9 @@ public class CardInGroup {
     private Date added_date;
     private String added_by;
 
+    /**
+     * Instantiates a new Card in group.
+     */
     public CardInGroup() {
 
     }

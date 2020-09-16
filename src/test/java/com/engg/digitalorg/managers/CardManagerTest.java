@@ -19,6 +19,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * The type Card manager test.
+ */
 public class CardManagerTest {
 
     @Mock
@@ -29,11 +32,19 @@ public class CardManagerTest {
     @InjectMocks
     private CardManager cardManagerUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test create card.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testCreateCard() throws Exception {
         // Setup
@@ -66,6 +77,11 @@ public class CardManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test create card throws io exception.
+     *
+     * @throws Exception the exception
+     */
     @Test(expectedExceptions = {IOException.class})
     public void testCreateCard_ThrowsIOException() throws Exception {
         // Setup
@@ -96,6 +112,9 @@ public class CardManagerTest {
         cardManagerUnderTest.createCard(cardRequest);
     }
 
+    /**
+     * Test get card by id.
+     */
     @Test
     public void testGetCardById() {
         // Setup
@@ -119,6 +138,9 @@ public class CardManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test uplaod image.
+     */
     @Test
     public void testUplaodImage() {
         // Setup
@@ -134,6 +156,9 @@ public class CardManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test download image.
+     */
     @Test
     public void testDownloadImage() {
         // Setup
@@ -148,17 +173,32 @@ public class CardManagerTest {
         // Verify the results
     }
 
+    /**
+     * Test delete card.
+     */
     @Test
     public void testDeleteCard() {
         // Setup
 
+        final Card card = new Card();
+        card.setId(0);
+        card.setTitle("title");
+        card.setDescription("description");
+        card.setUrl_id(45);
+        card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+        card.setCreated_by("created_by");
+        card.setTribe("tribe");
+        card.setTeam("team");
         // Run the test
-        cardManagerUnderTest.deleteCard(0);
+        cardManagerUnderTest.deleteCard(card, "email");
 
         // Verify the results
         verify(mockCardRepository).deleteById(0);
     }
 
+    /**
+     * Test get all card.
+     */
     @Test
     public void testGetAllCard() {
         // Setup

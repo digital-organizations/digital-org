@@ -22,6 +22,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * The type Group service test.
+ */
 public class GroupServiceTest {
 
     @Mock
@@ -30,11 +33,17 @@ public class GroupServiceTest {
     @InjectMocks
     private GroupService groupServiceUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test create group.
+     */
     @Test
     public void testCreateGroup() {
         // Setup
@@ -67,6 +76,9 @@ public class GroupServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test create group throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testCreateGroup_ThrowsDigitalOrgException() {
         // Setup
@@ -97,6 +109,9 @@ public class GroupServiceTest {
         groupServiceUnderTest.createGroup(groupRequest);
     }
 
+    /**
+     * Test get groupby id.
+     */
     @Test
     public void testGetGroupbyId() {
         // Setup
@@ -121,6 +136,9 @@ public class GroupServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test get groupby id throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testGetGroupbyId_ThrowsDigitalOrgException() {
         // Setup
@@ -143,6 +161,9 @@ public class GroupServiceTest {
         groupServiceUnderTest.getGroupbyId(0);
     }
 
+    /**
+     * Test update group.
+     */
     @Test
     public void testUpdateGroup() {
         // Setup
@@ -188,6 +209,9 @@ public class GroupServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test update group throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testUpdateGroup_ThrowsDigitalOrgException() {
         // Setup
@@ -231,6 +255,9 @@ public class GroupServiceTest {
         groupServiceUnderTest.updateGroup(groupRequest);
     }
 
+    /**
+     * Test add user to group.
+     */
     @Test
     public void testAddUserToGroup() {
         // Setup
@@ -256,6 +283,9 @@ public class GroupServiceTest {
         verify(mockGroupManager).addUserToGroup("user", "groupName", 1);
     }
 
+    /**
+     * Test add user to group throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testAddUserToGroup_ThrowsDigitalOrgException() {
         // Setup
@@ -278,6 +308,9 @@ public class GroupServiceTest {
         groupServiceUnderTest.addUserToGroup("user", "admin", 0);
     }
 
+    /**
+     * Test remove user from group.
+     */
     @Test
     public void testRemoveUserFromGroup() {
         // Setup
@@ -303,6 +336,9 @@ public class GroupServiceTest {
         verify(mockGroupManager).removeUserToGroup("user", 1);
     }
 
+    /**
+     * Test remove user from group throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testRemoveUserFromGroup_ThrowsDigitalOrgException() {
         // Setup
@@ -325,6 +361,9 @@ public class GroupServiceTest {
         groupServiceUnderTest.removeUserFromGroup("user", 0);
     }
 
+    /**
+     * Test get all group service.
+     */
     @Test
     public void testGetAllGroupService() {
         // Setup
@@ -350,6 +389,9 @@ public class GroupServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test get all group service throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testGetAllGroupService_ThrowsDigitalOrgException() {
         // Setup

@@ -12,10 +12,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+/**
+ * The type Swagger config.
+ */
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
 
+    /**
+     * Api docket.
+     *
+     * @return the docket
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

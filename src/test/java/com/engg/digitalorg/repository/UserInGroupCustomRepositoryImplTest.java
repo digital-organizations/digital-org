@@ -10,16 +10,25 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type User in group custom repository impl test.
+ */
 public class UserInGroupCustomRepositoryImplTest {
 
     private UserInGroupCustomRepositoryImpl userInGroupCustomRepositoryImplUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         userInGroupCustomRepositoryImplUnderTest = new UserInGroupCustomRepositoryImpl();
         userInGroupCustomRepositoryImplUnderTest.entityManager = mock(EntityManager.class);
     }
 
+    /**
+     * Test find all user in group by group name.
+     */
     @Test
     public void testFindAllUserInGroupByGroupName() {
         // Setup
@@ -31,6 +40,9 @@ public class UserInGroupCustomRepositoryImplTest {
         // Verify the results
     }
 
+    /**
+     * Test find all user in group by group id.
+     */
     @Test
     public void testFindAllUserInGroupByGroupID() {
         // Setup

@@ -4,10 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+/**
+ * The type Icon.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name="icon", schema = "digital")
+@Table(name = "icon", schema = "digital")
 public class Icon {
 
     @Id
@@ -19,11 +23,22 @@ public class Icon {
     @Lob
     private byte[] file;
 
+    /**
+     * Instantiates a new Icon.
+     */
     public Icon() {
 
     }
 
-    public Icon(String originalFilename, String contentType, int cardId, byte[] compressBytes ) {
+    /**
+     * Instantiates a new Icon.
+     *
+     * @param originalFilename the original filename
+     * @param contentType      the content type
+     * @param cardId           the card id
+     * @param compressBytes    the compress bytes
+     */
+    public Icon(String originalFilename, String contentType, int cardId, byte[] compressBytes) {
         this.name = originalFilename;
         this.type = contentType;
         this.card_id = cardId;

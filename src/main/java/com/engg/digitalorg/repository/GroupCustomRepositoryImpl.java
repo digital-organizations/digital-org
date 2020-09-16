@@ -10,10 +10,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * The type Group custom repository.
+ */
 @Repository
 @Transactional(readOnly = true)
-public class GroupCustomRepositoryImpl implements GroupCustomRepository{
+public class GroupCustomRepositoryImpl implements GroupCustomRepository {
 
+    /**
+     * The Entity manager.
+     */
     @PersistenceContext
     EntityManager entityManager;
 

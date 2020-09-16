@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * The type Card response.
+ */
 @Getter
 @Setter
 public class CardResponse {

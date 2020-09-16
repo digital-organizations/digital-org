@@ -6,10 +6,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * The type Group.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name="group", schema = "digital")
+@Table(name = "group", schema = "digital")
 
 public class Group {
 

@@ -11,16 +11,25 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Group custom repository impl test.
+ */
 public class GroupCustomRepositoryImplTest {
 
     private GroupCustomRepositoryImpl groupCustomRepositoryImplUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         groupCustomRepositoryImplUnderTest = new GroupCustomRepositoryImpl();
         groupCustomRepositoryImplUnderTest.entityManager = mock(EntityManager.class);
     }
 
+    /**
+     * Test find all active group.
+     */
     @Test
     public void testFindAllActiveGroup() {
         // Setup
@@ -32,6 +41,9 @@ public class GroupCustomRepositoryImplTest {
         // Verify the results
     }
 
+    /**
+     * Test remove card from group.
+     */
     @Test
     public void testRemoveCardFromGroup() {
         // Setup

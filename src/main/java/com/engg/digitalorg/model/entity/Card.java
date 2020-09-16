@@ -6,10 +6,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * The type Card.
+ */
 @Getter
 @Setter
 @Entity
-@Table(name="card", schema = "digital")
+@Table(name = "card", schema = "digital")
 public class Card {
 
     @Id

@@ -8,11 +8,19 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+/**
+ * The type Digital util.
+ */
 public class DigitalUtil {
 
-    public static boolean isEmailValid(String email)
-    {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+    /**
+     * Is email valid boolean.
+     *
+     * @param email the email
+     * @return the boolean
+     */
+    public static boolean isEmailValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
@@ -23,18 +31,28 @@ public class DigitalUtil {
         return pat.matcher(email).matches();
     }
 
-    public static boolean isUrlValid(String url)
-    {
+    /**
+     * Is url valid boolean.
+     *
+     * @param url the url
+     * @return the boolean
+     */
+    public static boolean isUrlValid(String url) {
         try {
             new URL(url).toURI();
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    // compress the image bytes before storing it in the database
+    /**
+     * Compress bytes byte [ ].
+     *
+     * @param data the data
+     * @return the byte [ ]
+     */
+// compress the image bytes before storing it in the database
     public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setInput(data);
@@ -53,7 +71,13 @@ public class DigitalUtil {
         return outputStream.toByteArray();
     }
 
-    // uncompress the image bytes before returning it to the angular application
+    /**
+     * Decompress bytes byte [ ].
+     *
+     * @param data the data
+     * @return the byte [ ]
+     */
+// uncompress the image bytes before returning it to the angular application
     public static byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);

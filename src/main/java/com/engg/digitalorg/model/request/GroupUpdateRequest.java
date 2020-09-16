@@ -3,6 +3,9 @@ package com.engg.digitalorg.model.request;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Group update request.
+ */
 @Getter
 @Setter
 public class GroupUpdateRequest {

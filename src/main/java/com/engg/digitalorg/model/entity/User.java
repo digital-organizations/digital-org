@@ -5,8 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * The type User.
+ */
 @Entity
-@Table(name="user", schema = "digital")
+@Table(name = "user", schema = "digital")
 @Getter
 @Setter
 public class User {

@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * The type Url long request.
+ */
 @Getter
 @Setter
 public class UrlLongRequest {

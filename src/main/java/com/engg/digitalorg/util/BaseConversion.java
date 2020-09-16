@@ -2,6 +2,9 @@ package com.engg.digitalorg.util;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Base conversion.
+ */
 @Service
 public class BaseConversion {
 
@@ -9,10 +12,16 @@ public class BaseConversion {
     private char[] allowedCharacters = allowedString.toCharArray();
     private int base = allowedCharacters.length;
 
-    public String encode(long input){
+    /**
+     * Encode string.
+     *
+     * @param input the input
+     * @return the string
+     */
+    public String encode(long input) {
         StringBuilder encodedString = new StringBuilder();
 
-        if(input == 0) {
+        if (input == 0) {
             return String.valueOf(allowedCharacters[0]);
         }
 
@@ -24,11 +33,17 @@ public class BaseConversion {
         return encodedString.reverse().toString();
     }
 
-    public long decode(String input) {
+    /**
+     * Decode long.
+     *
+     * @param input the input
+     * @return the long
+     */
+    public int decode(String input) {
         char[] characters = input.toCharArray();
-        double length = characters.length;
+        float length = characters.length;
 
-        long decoded = 0;
+        int decoded = 0;
 
         //counter is used to avoid reversing input string
         int counter = 1;

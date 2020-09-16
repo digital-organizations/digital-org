@@ -5,15 +5,24 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
+/**
+ * The type Base conversion test.
+ */
 public class BaseConversionTest {
 
     private BaseConversion baseConversionUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         baseConversionUnderTest = new BaseConversion();
     }
 
+    /**
+     * Test encode.
+     */
     @Test
     public void testEncode() {
         // Setup
@@ -25,6 +34,9 @@ public class BaseConversionTest {
         assertEquals("result", result);
     }
 
+    /**
+     * Test decode.
+     */
     @Test
     public void testDecode() {
         // Setup

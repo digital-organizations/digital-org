@@ -13,6 +13,9 @@ import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * The type Url service test.
+ */
 public class UrlServiceTest {
 
     @Mock
@@ -23,11 +26,17 @@ public class UrlServiceTest {
     @InjectMocks
     private UrlService urlServiceUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test get and redirect.
+     */
     @Test
     public void testGetAndRedirect() {
         // Setup
@@ -39,6 +48,9 @@ public class UrlServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test send simple message.
+     */
     @Test
     public void testSendSimpleMessage() {
         // Setup
@@ -50,6 +62,9 @@ public class UrlServiceTest {
         verify(mockEmailSender).send(new SimpleMailMessage());
     }
 
+    /**
+     * Test send simple message java mail sender throws mail exception.
+     */
     @Test
     public void testSendSimpleMessage_JavaMailSenderThrowsMailException() {
         // Setup

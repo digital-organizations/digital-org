@@ -26,6 +26,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * The type Card service test.
+ */
 public class CardServiceTest {
 
     @Mock
@@ -34,11 +37,19 @@ public class CardServiceTest {
     @InjectMocks
     private CardService cardServiceUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test create card.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testCreateCard() throws Exception {
         // Setup
@@ -73,6 +84,11 @@ public class CardServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test create card card manager throws io exception.
+     *
+     * @throws Exception the exception
+     */
     @Test(expectedExceptions = {IOException.class})
     public void testCreateCard_CardManagerThrowsIOException() throws Exception {
         // Setup
@@ -93,6 +109,11 @@ public class CardServiceTest {
         cardServiceUnderTest.createCard(cardRequest);
     }
 
+    /**
+     * Test uplaod image.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testUplaodImage() throws Exception {
         // Setup
@@ -105,6 +126,11 @@ public class CardServiceTest {
         verify(mockCardManager).uplaodImage(any(Icon.class));
     }
 
+    /**
+     * Test uplaod image throws io exception.
+     *
+     * @throws Exception the exception
+     */
     @Test(expectedExceptions = {IOException.class})
     public void testUplaodImage_ThrowsIOException() throws Exception {
         // Setup
@@ -114,6 +140,11 @@ public class CardServiceTest {
         cardServiceUnderTest.uplaodImage(0, file);
     }
 
+    /**
+     * Test download image.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testDownloadImage() throws Exception {
         // Setup
@@ -128,6 +159,11 @@ public class CardServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test download image throws io exception.
+     *
+     * @throws Exception the exception
+     */
     @Test(expectedExceptions = {IOException.class})
     public void testDownloadImage_ThrowsIOException() throws Exception {
         // Setup
@@ -140,6 +176,11 @@ public class CardServiceTest {
         cardServiceUnderTest.downloadImage(0);
     }
 
+    /**
+     * Test download imageocta.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testDownloadImageocta() throws Exception {
         // Setup
@@ -154,6 +195,11 @@ public class CardServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test download imageocta throws io exception.
+     *
+     * @throws Exception the exception
+     */
     @Test(expectedExceptions = {IOException.class})
     public void testDownloadImageocta_ThrowsIOException() throws Exception {
         // Setup
@@ -166,6 +212,9 @@ public class CardServiceTest {
         cardServiceUnderTest.downloadImageocta(0);
     }
 
+    /**
+     * Test delete card.
+     */
     @Test
     public void testDeleteCard() {
         // Setup
@@ -186,9 +235,12 @@ public class CardServiceTest {
         final ResponseEntity result = cardServiceUnderTest.deleteCard(0, "email");
 
         // Verify the results
-        verify(mockCardManager).deleteCard(0);
+        verify(mockCardManager).deleteCard(card, "email@emil.com");
     }
 
+    /**
+     * Test delete card throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testDeleteCard_ThrowsDigitalOrgException() {
         // Setup
@@ -209,6 +261,9 @@ public class CardServiceTest {
         cardServiceUnderTest.deleteCard(0, "email");
     }
 
+    /**
+     * Test get allcard.
+     */
     @Test
     public void testGetAllcard() {
         // Setup
@@ -234,6 +289,9 @@ public class CardServiceTest {
         // Verify the results
     }
 
+    /**
+     * Test get allcard throws digital org exception.
+     */
     @Test(expectedExceptions = {DigitalOrgException.class})
     public void testGetAllcard_ThrowsDigitalOrgException() {
         // Setup

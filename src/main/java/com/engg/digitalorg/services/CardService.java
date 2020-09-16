@@ -25,6 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type Card service.
+ */
 @RestController("CardService")
 public class CardService implements CardApi {
 
@@ -68,13 +71,7 @@ public class CardService implements CardApi {
 
     @Override
     public ResponseEntity deleteCard(int cardId, String email) throws DigitalOrgException {
-        Card card = cardManager.getCardById(cardId);
-        if(card.getCreated_by().equals(email)) {
-            cardManager.deleteCard(cardId);
-        }
-        else {
-            throw new DigitalOrgException("You are not an admin of this group.");
-        }
+        cardManager.deleteCard(cardManager.getCardById(cardId), email);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

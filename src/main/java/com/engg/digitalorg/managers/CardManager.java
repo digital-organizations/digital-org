@@ -7,10 +7,7 @@ import com.engg.digitalorg.model.entity.Url;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.request.CardUpdateRequest;
 import com.engg.digitalorg.model.response.CardResponse;
-import com.engg.digitalorg.repository.CardRepository;
-import com.engg.digitalorg.repository.GroupCustomRepository;
-import com.engg.digitalorg.repository.IconRepository;
-import com.engg.digitalorg.repository.UrlRepository;
+import com.engg.digitalorg.repository.*;
 import com.engg.digitalorg.util.BaseConversion;
 import com.engg.digitalorg.util.DigitalUtil;
 import org.modelmapper.ModelMapper;
@@ -24,6 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Card manager.
+ */
 @Component
 public class CardManager {
 
@@ -38,14 +38,34 @@ public class CardManager {
     private UrlRepository urlRepository;
 
     @Autowired
+    private CardInGroupRepository cardInGroupRepository;
+
+    /**
+     * The Icon repository.
+     */
+    @Autowired
     IconRepository iconRepository;
 
+    /**
+     * The Base conversion.
+     */
     @Autowired
     BaseConversion baseConversion;
 
+    /**
+     * The Group custom repository.
+     */
     @Autowired
     GroupCustomRepository groupCustomRepository;
 
+    /**
+     * Create short url url.
+     *
+     * @param originalUrl the original url
+     * @param date        the date
+     * @param cardId      the card id
+     * @return the url
+     */
     public Url createShortUrl(String originalUrl, Date date, int cardId) {
         Url url = new Url();
         url.setLong_url(originalUrl);
@@ -58,7 +78,14 @@ public class CardManager {
     }
 
 
-    public CardResponse createCard(CardRequest cardRequest)  throws IOException {
+    /**
+     * Create card card response.
+     *
+     * @param cardRequest the card request
+     * @return the card response
+     * @throws IOException the io exception
+     */
+    public CardResponse createCard(CardRequest cardRequest) throws IOException {
         cardRequestValidation(cardRequest);
         ModelMapper reqModelMapper = new ModelMapper();
         Card card = reqModelMapper.map(cardRequest, Card.class);
@@ -73,9 +100,9 @@ public class CardManager {
         Icon icon = iconRepository.save(new Icon("favicon.png", "image/png", response.getId(), DigitalUtil.compressBytes(bytes)));
 
 
-        if(cardRequest.getOriginal_url() != null) {
+        if (cardRequest.getOriginal_url() != null) {
             Url newUrl = createShortUrl(cardRequest.getOriginal_url(), cardRequest.getExpire_date(), response.getId());
-            cardRepository.updateAddress(newUrl.getId(), icon.getId(),response.getId());
+            cardRepository.updateAddress(newUrl.getId(), icon.getId(), response.getId());
         }
 
         ModelMapper resModelMapper = new ModelMapper();
@@ -84,11 +111,16 @@ public class CardManager {
         return cardResponse;
     }
 
+    /**
+     * Card request validation.
+     *
+     * @param cardRequest the card request
+     */
     public void cardRequestValidation(CardRequest cardRequest) {
-        if(!DigitalUtil.isEmailValid(cardRequest.getCreated_by()) || !DigitalUtil.isEmailValid(cardRequest.getUpdated_by())) {
+        if (!DigitalUtil.isEmailValid(cardRequest.getCreated_by()) || !DigitalUtil.isEmailValid(cardRequest.getUpdated_by())) {
             throw new DigitalOrgException("Email is not valid");
         }
-        if(!DigitalUtil.isUrlValid(cardRequest.getOriginal_url())) {
+        if (!DigitalUtil.isUrlValid(cardRequest.getOriginal_url())) {
             throw new DigitalOrgException("Original Url is not valid");
         }
     }
@@ -106,35 +138,70 @@ public class CardManager {
     }
     */
 
+    /**
+     * Gets card by id.
+     *
+     * @param cardId the card id
+     * @return the card by id
+     */
     public Card getCardById(int cardId) {
         Optional<Card> card = cardRepository.findById(cardId);
         return card.get();
     }
 
+    /**
+     * Uplaod image.
+     *
+     * @param icon the icon
+     */
     public void uplaodImage(Icon icon) {
         iconRepository.save(icon);
     }
 
+    /**
+     * Download image icon.
+     *
+     * @param cardId the card id
+     * @return the icon
+     */
     public Icon downloadImage(int cardId) {
         Optional<Icon> icon = iconRepository.findById(getCardById(cardId).getIcon_id());
         return icon.get();
     }
 
-    public void deleteCard(int cardId) {
-        groupCustomRepository.removeCardFromGroup(cardId);
-        cardRepository.deleteById(cardId);
+    /**
+     * Delete card.
+     *
+     * @param card  the card
+     * @param email the email
+     */
+    public void deleteCard(Card card, String email) {
+        if (card.getCreated_by().equals(email)) {
+            cardInGroupRepository.deleteCardInGroup(card.getId());
+            iconRepository.deleteById(card.getIcon_id());
+            urlRepository.deleteById(card.getUrl_id());
+            cardRepository.deleteById(card.getId());
+        } else {
+            throw new DigitalOrgException("You are not an admin of this group.");
+        }
+
     }
 
 
+    /**
+     * Gets all card.
+     *
+     * @param emailId the email id
+     * @return the all card
+     */
     public List<CardResponse> getAllCard(String emailId) {
         List<CardResponse> cardList = cardRepository.findAll().stream()
                 .collect(Collectors.mapping(p -> new ModelMapper().map(p, CardResponse.class), Collectors.toList()));
 
         List<CardResponse> cardResponseList = cardList.stream().map(cardResponse -> {
-            if(cardResponse.getCreated_by().equals(emailId)) {
+            if (cardResponse.getCreated_by().equals(emailId)) {
                 cardResponse.setHasAdmin(true);
-            }
-            else {
+            } else {
                 cardResponse.setHasAdmin(false);
             }
             return cardResponse;
@@ -142,16 +209,22 @@ public class CardManager {
         return cardResponseList;
     }
 
+    /**
+     * Update card object.
+     *
+     * @param cardRequest the card request
+     * @return the object
+     */
     public Object updateCard(CardUpdateRequest cardRequest) {
         CardResponse cardResponse = null;
         Optional<Card> cardOptional = cardRepository.findById(cardRequest.getId());
         Card card = cardOptional.get();
-        if(card !=null && card.getCreated_by().equals(cardRequest.getUpdated_by())) {
+        if (card != null && card.getCreated_by().equals(cardRequest.getUpdated_by())) {
             ModelMapper reqModelMapper = new ModelMapper();
             Card cardMapper = reqModelMapper.map(cardRequest, Card.class);
             cardMapper.setUpdated_date(new Date());
 
-            if(cardRequest.getOriginal_url() != null) {
+            if (cardRequest.getOriginal_url() != null) {
                 updateShortUrl(card, cardRequest.getOriginal_url(), cardRequest.getExpire_date(), card.getId());
             }
             cardRepository.save(cardMapper);
@@ -163,6 +236,14 @@ public class CardManager {
         return cardResponse;
     }
 
+    /**
+     * Update short url.
+     *
+     * @param card        the card
+     * @param originalUrl the original url
+     * @param date        the date
+     * @param urlId       the url id
+     */
     public void updateShortUrl(Card card, String originalUrl, Date date, int urlId) {
         urlRepository.updateUrl(originalUrl, baseConversion.encode(card.getId()), date, urlId);
     }

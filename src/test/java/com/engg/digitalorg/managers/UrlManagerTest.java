@@ -18,6 +18,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.testng.Assert.assertEquals;
 
+/**
+ * The type Url manager test.
+ */
 public class UrlManagerTest {
 
     @Mock
@@ -28,15 +31,21 @@ public class UrlManagerTest {
     @InjectMocks
     private UrlManager urlManagerUnderTest;
 
+    /**
+     * Sets up.
+     */
     @BeforeMethod
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test get original url.
+     */
     @Test
     public void testGetOriginalUrl() {
         // Setup
-        when(mockBaseConversion.decode("input")).thenReturn(0L);
+        when(mockBaseConversion.decode("input")).thenReturn(0);
 
         // Configure UrlRepository.findById(...).
         final Url url1 = new Url();
@@ -47,7 +56,7 @@ public class UrlManagerTest {
         url1.setShort_url("short_url");
         url1.setExpires_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
         final Optional<Url> url = Optional.of(url1);
-        when(mockUrlRepository.findById(0L)).thenReturn(url);
+        when(mockUrlRepository.findById(0)).thenReturn(url);
 
         // Run the test
         final String result = urlManagerUnderTest.getOriginalUrl("shortUrl");
