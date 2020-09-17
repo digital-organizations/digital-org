@@ -159,6 +159,6 @@ public interface CardApi {
      */
     @ApiOperation(value = "Suggestion For Card", notes = "Suggestion For Card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
-    @GetMapping(path = "/suggestion{email}", produces = "application/json")
+    @GetMapping(path = "/suggestion/{email}", produces = "application/json")
     ResponseEntity<List<SuggestionQueue>> getAllSuggestionForCard(@PathVariable("email") String email) throws DigitalOrgException, NotFoundException;
 }
