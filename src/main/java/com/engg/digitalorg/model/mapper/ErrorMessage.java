@@ -1,5 +1,6 @@
 package com.engg.digitalorg.model.mapper;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -21,6 +22,11 @@ public class ErrorMessage implements Serializable {
      * The Object mapper.
      */
     static protected ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
     /**
      * Instantiates a new Error message.

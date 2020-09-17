@@ -2,6 +2,7 @@ package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.model.entity.Group;
+import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
 import io.swagger.annotations.*;
@@ -77,7 +78,7 @@ public interface GroupApi {
      * @throws DigitalOrgException the digital org exception
      */
     @ApiOperation(value = "remove user from group", notes = "remove User from group", response = ResponseEntity.class)
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "No content", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @DeleteMapping(path = "/user-from-group", consumes = "application/json", produces = "application/json")
     ResponseEntity removeUserFromGroup(@ApiParam(value = "email", required = true) @RequestBody String email, int groupId) throws DigitalOrgException;
 
@@ -92,4 +93,29 @@ public interface GroupApi {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @GetMapping(path = "/all/{email}", produces = "application/json")
     public ResponseEntity<List> getAllGroupService(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
+
+    /**
+     * Add card to group response entity.
+     *
+     * @param cardInGroupRequest the card in group request
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
+    @ApiOperation(value = "Add card to group", notes = "Admin of group can be add card.", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
+    @PostMapping(path = "/add-card-to-group", consumes = "application/json", produces = "application/json")
+    ResponseEntity addCardToGroup(@ApiParam(value = "email", required = true) @RequestBody CardInGroupRequest cardInGroupRequest) throws DigitalOrgException;
+
+    /**
+     * Remove card to group response entity.
+     *
+     * @param cardInGroupRequest the card in group request
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     */
+    @ApiOperation(value = "Remove user to group", notes = "Admin of group can be remove card.", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
+    @PostMapping(path = "/remove-card-to-group", consumes = "application/json", produces = "application/json")
+    ResponseEntity removeCardToGroup(@ApiParam(value = "email", required = true) @RequestBody CardInGroupRequest cardInGroupRequest) throws DigitalOrgException;
+
 }

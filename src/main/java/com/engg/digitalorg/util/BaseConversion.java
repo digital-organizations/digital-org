@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseConversion {
 
-    private static final String allowedString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private char[] allowedCharacters = allowedString.toCharArray();
+    private static final String ALLOWED_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private char[] allowedCharacters = ALLOWED_STRING.toCharArray();
     private int base = allowedCharacters.length;
 
     /**
@@ -48,7 +48,7 @@ public class BaseConversion {
         //counter is used to avoid reversing input string
         int counter = 1;
         for (int i = 0; i < length; i++) {
-            decoded += allowedString.indexOf(characters[i]) * Math.pow(base, length - counter);
+            decoded += ALLOWED_STRING.indexOf(characters[i]) * Math.pow(base, length - counter);
             counter++;
         }
         return decoded;

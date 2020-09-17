@@ -2,15 +2,19 @@ package com.engg.digitalorg.services;
 
 import co.elastic.apm.api.CaptureSpan;
 import com.engg.digitalorg.api.CardApi;
+import com.engg.digitalorg.exception.BadRequestException;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.CardManager;
 import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Icon;
+import com.engg.digitalorg.model.entity.SuggestionQueue;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.request.CardUpdateRequest;
+import com.engg.digitalorg.model.request.SuggestionQueueRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.IconResponse;
 import com.engg.digitalorg.util.DigitalUtil;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -36,16 +40,20 @@ public class CardService implements CardApi {
 
     @Override
     public ResponseEntity<CardResponse> createCard(CardRequest cardRequest) throws DigitalOrgException, IOException {
-        return new ResponseEntity<>(cardManager.createCard(cardRequest), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(cardManager.createCard(cardRequest), HttpStatus.CREATED);
+        }
+        catch (Exception ex) {
+            throw new BadRequestException(ex.getMessage());
+        }
     }
 
     @Override
-    public ResponseEntity updateCard(CardUpdateRequest cardRequest) throws DigitalOrgException, IOException {
+    public ResponseEntity<CardResponse> updateCard(CardUpdateRequest cardRequest) throws DigitalOrgException, IOException {
         return new ResponseEntity<>(cardManager.updateCard(cardRequest), HttpStatus.OK);
     }
 
-    public ResponseEntity uplaodImage(int cardId, @RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+    public ResponseEntity<CardResponse> uplaodImage(int cardId, @RequestParam("file") MultipartFile file) throws IOException {
         Icon icon = new Icon(file.getOriginalFilename(), file.getContentType(), cardId, DigitalUtil.compressBytes(file.getBytes()));
         cardManager.uplaodImage(icon);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -79,6 +87,11 @@ public class CardService implements CardApi {
     @CaptureSpan(value = "getAllCard", type = "service", subtype = "http")
     public ResponseEntity<List> getAllcard(String email) throws DigitalOrgException {
         return new ResponseEntity<>(cardManager.getAllCard(email), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<SuggestionQueue> suggestionForCard(SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException {
+        return new ResponseEntity<>(cardManager.suggestionForCard(suggestionQueueRequest), HttpStatus.OK);
     }
 
 }

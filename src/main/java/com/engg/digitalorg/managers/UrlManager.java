@@ -39,7 +39,7 @@ public class UrlManager {
         try {
             int id = baseConversion.decode(shortUrl);
             entity = urlRepository.findById(id);
-            if (entity == null || entity.get() == null) {
+            if (entity.get() == null) {
                 throw new EntityNotFoundException("There is no record with " + shortUrl);
             }
             if (entity.get().getExpires_date() != null && entity.get().getExpires_date().before(new Date())) {

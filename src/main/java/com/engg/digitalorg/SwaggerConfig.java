@@ -30,15 +30,30 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.engg.digitalorg"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(apiInfo());
     }
 
-
-    private ApiInfo getApiInfo() {
-        return new ApiInfo("Digital Org Swagger Api Documentation",
-                "Rest API for Digital Org",
-                "1.0", "urn:tos",
-                new Contact("Abhay Shukla", "www.abhayshukla.in", "abhay.shukla04@gmail.com"),
-                "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
+    /**
+     * Api info api info.
+     *
+     * @return the api info
+     */
+    @Bean
+    ApiInfo apiInfo()
+    {
+        return new ApiInfo("A digital organization services",
+                "These services demonstrates some services "
+                        + "related to card and group."
+                        + "It serve purpose of managing the urls for any organization",
+                "1.0.0",
+                "https://digital-org.herokuapp.com/",
+                new Contact("Abhay Shukla",
+                        "https://github.com/abhayshukla04",
+                        "abhay.shukla04@gmail.com"),
+                "The Apache Software License, Version 2.0",
+                "http://www.apache.org/licenses/LICENSE-2.0.txt",
+                Collections.EMPTY_LIST
+        );
     }
 }

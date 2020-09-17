@@ -4,9 +4,11 @@ import com.engg.digitalorg.model.mapper.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -15,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * The type Digital exception handler.
  */
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class DigitalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -41,7 +43,19 @@ public class DigitalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<Object> handleBadRequestException(BadRequestException ex, WebRequest request) {
-        return super.handleExceptionInternal(ex, new ErrorMessage(ex.getMessage()).toJson(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return new ResponseEntity(new ErrorMessage(ex.getMessage()).toJson(), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle not found exception response entity.
+     *
+     * @param ex      the ex
+     * @param request the request
+     * @return the response entity
+     */
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<Object> handleNotFoundException(BadRequestException ex, WebRequest request) {
+        return new ResponseEntity(new ErrorMessage(ex.getMessage()).toJson(), HttpStatus.NOT_FOUND);
     }
 
 }

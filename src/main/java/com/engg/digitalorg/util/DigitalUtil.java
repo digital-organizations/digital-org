@@ -1,5 +1,7 @@
 package com.engg.digitalorg.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -11,6 +13,7 @@ import java.util.zip.Inflater;
 /**
  * The type Digital util.
  */
+@Slf4j
 public class DigitalUtil {
 
     /**
@@ -64,10 +67,11 @@ public class DigitalUtil {
             outputStream.write(buffer, 0, count);
         }
         try {
+            log.info("Compressed Image Byte Size - " + outputStream.toByteArray().length);
             outputStream.close();
         } catch (IOException e) {
+            log.error("Exception durring compressBytes ", e.getMessage());
         }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
 
@@ -90,7 +94,9 @@ public class DigitalUtil {
             }
             outputStream.close();
         } catch (IOException ioe) {
+            log.error("Exception during decompressBytes", ioe.getMessage());
         } catch (DataFormatException e) {
+            log.error("Exception during decompressBytes", e.getMessage());
         }
         return outputStream.toByteArray();
     }

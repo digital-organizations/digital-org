@@ -1,14 +1,17 @@
 package com.engg.digitalorg.api;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
+import com.engg.digitalorg.model.entity.SuggestionQueue;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.request.CardUpdateRequest;
+import com.engg.digitalorg.model.request.SuggestionQueueRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.IconResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javassist.NotFoundException;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,7 @@ import java.util.List;
  * The interface Card api.
  */
 @RequestMapping("/card")
-@Api(tags = "Card Services", description = "Card Api")
+@Api(tags = "Card Services")
 @CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
 public interface CardApi {
 
@@ -38,7 +41,7 @@ public interface CardApi {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Invalid Request")})
     @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
-    ResponseEntity createCard(@RequestBody CardRequest cardRequest) throws DigitalOrgException, IOException;
+    ResponseEntity<CardResponse> createCard(@RequestBody CardRequest cardRequest) throws DigitalOrgException, IOException;
 
     /**
      * Update card response entity.
@@ -52,7 +55,7 @@ public interface CardApi {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Invalid Request")})
     @PatchMapping(path = "/update", consumes = "application/json", produces = "application/json")
-    ResponseEntity updateCard(@RequestBody CardUpdateRequest cardRequest) throws DigitalOrgException, IOException;
+    ResponseEntity<CardResponse> updateCard(@RequestBody CardUpdateRequest cardRequest) throws DigitalOrgException, IOException;
 
     /**
      * Uplaod image response entity.
@@ -66,7 +69,7 @@ public interface CardApi {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Unknown image type")})
     @PostMapping(path = "/upload/{card-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = "application/json")
-    public ResponseEntity<CardResponse> uplaodImage(@PathVariable("card-id") int cardId, @RequestPart("file") MultipartFile file) throws IOException;
+    ResponseEntity<CardResponse> uplaodImage(@PathVariable("card-id") int cardId, @RequestPart("file") MultipartFile file) throws IOException;
 
     /**
      * Download image response entity.
@@ -78,7 +81,7 @@ public interface CardApi {
     @ApiOperation(value = "Download image", notes = "Download image for card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Bad Request")})
     @GetMapping(path = "/download/{card-id}")
-    public ResponseEntity<IconResponse> downloadImage(@PathVariable("card-id") int cardId) throws IOException;
+    ResponseEntity<IconResponse> downloadImage(@PathVariable("card-id") int cardId) throws IOException;
 
     /**
      * Download imageocta response entity.
@@ -90,7 +93,7 @@ public interface CardApi {
     @ApiOperation(value = "Download image", notes = "Download image for card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Bad Request")})
     @GetMapping(path = "/download-octa/{card-id}")
-    public ResponseEntity<Resource> downloadImageocta(@PathVariable("card-id") int cardId) throws IOException;
+    ResponseEntity<Resource> downloadImageocta(@PathVariable("card-id") int cardId) throws IOException;
 
 
     /**
@@ -117,5 +120,18 @@ public interface CardApi {
     @ApiOperation(value = "Get All cards ", notes = "Get all card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @PostMapping(path = "/all", produces = "application/json")
-    public ResponseEntity<List> getAllcard(@RequestBody String email) throws DigitalOrgException;
+    ResponseEntity<List> getAllcard(@RequestBody String email) throws DigitalOrgException;
+
+    /**
+     * Suggestion for card response entity.
+     *
+     * @param suggestionQueueRequest the suggestion queue request
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     * @throws NotFoundException   the not found exception
+     */
+    @ApiOperation(value = "Suggestion For Card", notes = "Suggestion For Card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @PostMapping(path = "/suggestion", produces = "application/json")
+    ResponseEntity<SuggestionQueue> suggestionForCard(@RequestBody SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException;
 }

@@ -5,6 +5,7 @@ import com.engg.digitalorg.api.GroupApi;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.entity.Group;
+import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,15 @@ public class GroupService implements GroupApi {
     @CaptureSpan(value = "getAllcard", type = "service", subtype = "http")
     public ResponseEntity<List> getAllGroupService(String email) throws DigitalOrgException {
         return new ResponseEntity<>(groupManager.getAllGroupManager(email), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity addCardToGroup(CardInGroupRequest cardInGroupRequest) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.addCardToGroupManager(cardInGroupRequest), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity removeCardToGroup(CardInGroupRequest cardInGroupRequest) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.removeCardToGroupManager(cardInGroupRequest), HttpStatus.OK);
     }
 }

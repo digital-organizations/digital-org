@@ -20,5 +20,4 @@ public class CardUpdateRequest {
     private String team;
     private String component;
     private String updated_by;
-    private int group_id;
 }

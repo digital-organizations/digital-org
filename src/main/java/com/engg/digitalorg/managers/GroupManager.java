@@ -1,17 +1,21 @@
 package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
+import com.engg.digitalorg.model.entity.CardInGroup;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.entity.UserInGroup;
+import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
 import com.engg.digitalorg.model.response.GroupResponse;
+import com.engg.digitalorg.repository.CardInGroupRepository;
 import com.engg.digitalorg.repository.GroupRepository;
 import com.engg.digitalorg.repository.UserInGroupRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,9 @@ public class GroupManager {
 
     @Autowired
     private UserInGroupRepository userInGroupRepository;
+
+    @Autowired
+    private CardInGroupRepository cardInGroupRepository;
 
     /**
      * Gets group.
@@ -175,5 +182,66 @@ public class GroupManager {
             return groupResponse;
         }).collect(Collectors.toList());
         return groupResponseList;
+    }
+
+    /**
+     * Add card to group manager card in group.
+     *
+     * @param cardInGroupRequest the card in group request
+     * @return the card in group
+     */
+    public CardInGroup addCardToGroupManager(CardInGroupRequest cardInGroupRequest) {
+        Group  group = getGroupById(cardInGroupRequest.getGroup_id());
+        Collection<CardInGroup> cardInGroups =  cardInGroupRepository.fetchAllCardByGroupId(group.getId());
+        if(cardInGroups.isEmpty()) {
+            CardInGroup cardInGroup = saveCardInGroup(cardInGroupRequest);
+            return cardInGroup;
+        }
+        else {
+            userInGroupRepository.findAllUserInGroupByGroupID(group.getId()).stream().map(userInGroup -> {
+                if (userInGroup.getEmail().equals(cardInGroupRequest.getAdded_by())) {
+                    return saveCardInGroup(cardInGroupRequest);
+                }
+                return null;
+            });
+        }
+        return null;
+    }
+
+
+    private CardInGroup saveCardInGroup(CardInGroupRequest cardInGroupRequest) {
+        CardInGroup cardInGroup = new CardInGroup();
+        cardInGroup.setCard_id(cardInGroupRequest.getCard_id());
+        cardInGroup.setGroup_id(cardInGroupRequest.getCard_id());
+        cardInGroup.setAdded_by(cardInGroupRequest.getAdded_by());
+        cardInGroup.setAdded_date(new Date());
+        cardInGroupRepository.save(cardInGroup);
+        return cardInGroup;
+    }
+
+    /**
+     * Remove card to group manager object.
+     *
+     * @param cardInGroupRequest the card in group request
+     * @return the object
+     */
+    public Object removeCardToGroupManager(CardInGroupRequest cardInGroupRequest) {
+        Group  group = getGroupById(cardInGroupRequest.getGroup_id());
+        Collection<CardInGroup> cardInGroups =  cardInGroupRepository.fetchAllCardByGroupId(group.getId());
+        if(cardInGroups.isEmpty()) {
+            return null;
+        }
+        else {
+            userInGroupRepository.findAllUserInGroupByGroupID(group.getId()).stream().map(userInGroup -> {
+                if (userInGroup.getEmail().equals(cardInGroupRequest.getAdded_by())) {
+                    cardInGroups.stream().map(cardInGroup -> {
+                        cardInGroupRepository.deleteCardInGroup(cardInGroup.getCard_id());
+                        return null;
+                    });
+                }
+                return null;
+            });
+        }
+        return null;
     }
 }
