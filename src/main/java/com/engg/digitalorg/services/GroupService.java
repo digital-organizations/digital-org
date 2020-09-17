@@ -60,6 +60,12 @@ public class GroupService implements GroupApi {
     }
 
     @Override
+    @CaptureSpan(value = "getAllcard", type = "service", subtype = "http")
+    public ResponseEntity<List> getAllGroupServiceforOwner(String email) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.getAllGroupManagerForOwner(email), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity addCardToGroup(CardInGroupRequest cardInGroupRequest) throws DigitalOrgException {
         return new ResponseEntity<>(groupManager.addCardToGroupManager(cardInGroupRequest), HttpStatus.OK);
     }
@@ -67,5 +73,10 @@ public class GroupService implements GroupApi {
     @Override
     public ResponseEntity removeCardToGroup(CardInGroupRequest cardInGroupRequest) throws DigitalOrgException {
         return new ResponseEntity<>(groupManager.removeCardToGroupManager(cardInGroupRequest), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getAllCardForGroup(int groupId) throws DigitalOrgException {
+        return new ResponseEntity<>(groupManager.getAllCardForGroupManager(groupId), HttpStatus.OK);
     }
 }

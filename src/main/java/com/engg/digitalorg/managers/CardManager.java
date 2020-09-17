@@ -205,10 +205,12 @@ public class CardManager {
         List<CardResponse> cardResponseList = cardList.stream().map(cardResponse -> {
 
             Collection<Url> list = urlRepository.fetchURLObjectByCardId(cardResponse.getId());
-            Url url = list.iterator().next();
-            cardResponse.setOriginal_url(url.getLong_url());
-            cardResponse.setShort_url(url.getShort_url());
-            cardResponse.setExpire_date(url.getExpires_date());
+            if(!list.isEmpty()) {
+                Url url = list.iterator().next();
+                cardResponse.setOriginal_url(url.getLong_url());
+                cardResponse.setShort_url(url.getShort_url());
+                cardResponse.setExpire_date(url.getExpires_date());
+            }
             if (cardResponse.getCreated_by().equals(emailId)) {
                 cardResponse.setHasAdmin(true);
             } else {
@@ -217,6 +219,17 @@ public class CardManager {
             return cardResponse;
         }).collect(Collectors.toList());
         return cardResponseList;
+    }
+
+    /**
+     * Gets allcard for owner.
+     *
+     * @param emailId the email id
+     * @return the allcard for owner
+     */
+    public List<CardResponse> getAllcardForOwner(String emailId) {
+        List<CardResponse> cardResponseList = getAllCard(emailId);
+        return cardResponseList.stream().filter(cardResponse -> cardResponse.getHasAdmin() == true).collect(Collectors.toList());
     }
 
     /**
@@ -294,6 +307,12 @@ public class CardManager {
         }
     }
 
+    /**
+     * Gets all suggestion for card.
+     *
+     * @param email the email
+     * @return the all suggestion for card
+     */
     public List<SuggestionQueue> getAllSuggestionForCard(String email) {
         List<CardResponse> cardResponseList = getAllCard(email);
         List <SuggestionQueue> result = new ArrayList<>();

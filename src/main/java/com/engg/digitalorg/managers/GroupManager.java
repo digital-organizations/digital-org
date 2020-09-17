@@ -15,10 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -185,6 +182,18 @@ public class GroupManager {
     }
 
     /**
+     * Gets all group manager for owner.
+     *
+     * @param emailId the email id
+     * @return the all group manager for owner
+     */
+    public List<GroupResponse> getAllGroupManagerForOwner(String emailId) {
+        List<GroupResponse> groupResponseList = getAllGroupManager(emailId);
+        return groupResponseList.stream().filter(groupResponse -> groupResponse.getHasAdmin() == true).collect(Collectors.toList());
+    }
+
+
+    /**
      * Add card to group manager card in group.
      *
      * @param cardInGroupRequest the card in group request
@@ -243,5 +252,15 @@ public class GroupManager {
             });
         }
         return null;
+    }
+
+    /**
+     * Gets all card for group manager.
+     *
+     * @param groupId the group id
+     * @return the all card for group manager
+     */
+    public List<Group> getAllCardForGroupManager(int groupId) {
+        return groupRepository.findAllById(Collections.singleton(groupId));
     }
 }

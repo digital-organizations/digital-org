@@ -17,6 +17,12 @@ import java.util.Collection;
 @Transactional
 public interface SuggestionQueueRepository extends JpaRepository<SuggestionQueue, Integer> {
 
+    /**
+     * Gets all suggestion queue by card id.
+     *
+     * @param card_id the card id
+     * @return the all suggestion queue by card id
+     */
     @Modifying(clearAutomatically = true)
     @Query("SELECT sq FROM SuggestionQueue sq WHERE sq.card_id = :card_id")
     Collection<SuggestionQueue> getAllSuggestionQueueByCardId(@Param("card_id") int card_id);

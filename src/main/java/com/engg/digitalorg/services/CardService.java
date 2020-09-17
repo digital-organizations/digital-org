@@ -90,6 +90,12 @@ public class CardService implements CardApi {
     }
 
     @Override
+    @CaptureSpan(value = "getAllCard", type = "service", subtype = "http")
+    public ResponseEntity<List> getAllcardForOwner(String email) throws DigitalOrgException {
+        return new ResponseEntity<>(cardManager.getAllcardForOwner(email), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<SuggestionQueue> suggestionForCard(SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException {
         return new ResponseEntity<>(cardManager.suggestionForCard(suggestionQueueRequest), HttpStatus.OK);
     }

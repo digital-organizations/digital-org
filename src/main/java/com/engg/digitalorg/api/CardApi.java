@@ -122,6 +122,19 @@ public interface CardApi {
     @PostMapping(path = "/all", produces = "application/json")
     ResponseEntity<List> getAllcard(@RequestBody String email) throws DigitalOrgException;
 
+
+    /**
+     * Gets allcard for owner.
+     *
+     * @param email the email
+     * @return the allcard for owner
+     * @throws DigitalOrgException the digital org exception
+     */
+    @ApiOperation(value = "Get All cards Owner", notes = "Get all card for Owner", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @PostMapping(path = "/all/admin", produces = "application/json")
+    ResponseEntity<List> getAllcardForOwner(@RequestBody String email) throws DigitalOrgException;
+
     /**
      * Suggestion for card response entity.
      *
@@ -136,6 +149,14 @@ public interface CardApi {
     ResponseEntity<SuggestionQueue> suggestionForCard(@RequestBody SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException;
 
 
+    /**
+     * Gets all suggestion for card.
+     *
+     * @param email the email
+     * @return the all suggestion for card
+     * @throws DigitalOrgException the digital org exception
+     * @throws NotFoundException   the not found exception
+     */
     @ApiOperation(value = "Suggestion For Card", notes = "Suggestion For Card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @GetMapping(path = "/suggestion{email}", produces = "application/json")

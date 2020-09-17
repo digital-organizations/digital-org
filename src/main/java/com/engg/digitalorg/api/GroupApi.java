@@ -95,6 +95,18 @@ public interface GroupApi {
     public ResponseEntity<List> getAllGroupService(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
 
     /**
+     * Gets all group servicefor owner.
+     *
+     * @param email the email
+     * @return the all group servicefor owner
+     * @throws DigitalOrgException the digital org exception
+     */
+    @ApiOperation(value = "Get All group for owner ", notes = "Get all group for owner", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @GetMapping(path = "/all/admin/{email}", produces = "application/json")
+    public ResponseEntity<List> getAllGroupServiceforOwner(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
+
+    /**
      * Add card to group response entity.
      *
      * @param cardInGroupRequest the card in group request
@@ -115,7 +127,19 @@ public interface GroupApi {
      */
     @ApiOperation(value = "Remove user to group", notes = "Admin of group can be remove card.", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
-    @PostMapping(path = "/remove-card-to-group", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/remove-card-from-group", consumes = "application/json", produces = "application/json")
     ResponseEntity removeCardToGroup(@ApiParam(value = "email", required = true) @RequestBody CardInGroupRequest cardInGroupRequest) throws DigitalOrgException;
+
+    /**
+     * Gets all card for group.
+     *
+     * @param groupId the group id
+     * @return the all card for group
+     * @throws DigitalOrgException the digital org exception
+     */
+    @ApiOperation(value = "Get All card from group", notes = "Get All card from group.", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
+    @GetMapping(path = "/card-from-group/{group-id}", consumes = "application/json", produces = "application/json")
+    ResponseEntity getAllCardForGroup(@ApiParam(value = "group-id", required = true) @PathVariable("group-id") int groupId) throws DigitalOrgException;
 
 }
