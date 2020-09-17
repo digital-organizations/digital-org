@@ -53,7 +53,7 @@ public interface GroupApi {
     @ApiOperation(value = "delete group", notes = "delete Group", response = Group.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = Group.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @GetMapping(path = "/{group-id}", produces = "application/json")
-    public Group getGroupbyId(@ApiParam(value = "group object", required = true) @PathVariable("card-id") Integer cardId) throws DigitalOrgException;
+    Group getGroupbyId(@ApiParam(value = "group object", required = true) @PathVariable("card-id") Integer cardId) throws DigitalOrgException;
 
     /**
      * Add user to group response entity.
@@ -92,7 +92,7 @@ public interface GroupApi {
     @ApiOperation(value = "Get All group ", notes = "Get all group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @GetMapping(path = "/all/{email}", produces = "application/json")
-    public ResponseEntity<List> getAllGroupService(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
+    ResponseEntity<List> getAllGroupService(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
 
     /**
      * Gets all group servicefor owner.
@@ -104,7 +104,7 @@ public interface GroupApi {
     @ApiOperation(value = "Get All group for owner ", notes = "Get all group for owner", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @GetMapping(path = "/all/admin/{email}", produces = "application/json")
-    public ResponseEntity<List> getAllGroupServiceforOwner(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
+    ResponseEntity<List> getAllGroupServiceforOwner(@ApiParam(value = "email", required = true) @PathVariable("email") String email) throws DigitalOrgException;
 
     /**
      * Add card to group response entity.
@@ -139,7 +139,7 @@ public interface GroupApi {
      */
     @ApiOperation(value = "Get All card from group", notes = "Get All card from group.", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
-    @GetMapping(path = "/card-from-group/{group-id}", consumes = "application/json", produces = "application/json")
-    ResponseEntity getAllCardForGroup(@ApiParam(value = "group-id", required = true) @PathVariable("group-id") int groupId) throws DigitalOrgException;
+    @GetMapping(path = "/card-from-group/{group-id}", consumes = "*/*", produces = "application/json")
+    ResponseEntity<List> getAllCardForGroup(@PathVariable("group-id") int groupId) throws DigitalOrgException;
 
 }

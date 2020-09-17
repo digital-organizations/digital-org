@@ -36,4 +36,7 @@ public interface CardInGroupRepository extends JpaRepository<CardInGroup, Intege
     @Query("SELECT cig FROM CardInGroup cig WHERE cig.group_id = :group_id")
     Collection<CardInGroup> fetchAllCardByGroupId(@Param("group_id") int group_id);
 
+    @Modifying(clearAutomatically = true)
+    @Query("SELECT cig FROM CardInGroup cig WHERE cig.card_id = :card_id")
+    Collection<CardInGroup> fetchGrupByCardId(@Param("card_id") int card_id);
 }

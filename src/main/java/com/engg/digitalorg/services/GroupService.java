@@ -76,7 +76,7 @@ public class GroupService implements GroupApi {
     }
 
     @Override
-    public ResponseEntity getAllCardForGroup(int groupId) throws DigitalOrgException {
+    public ResponseEntity<List> getAllCardForGroup(int groupId) throws DigitalOrgException {
         return new ResponseEntity<>(groupManager.getAllCardForGroupManager(groupId), HttpStatus.OK);
     }
 }

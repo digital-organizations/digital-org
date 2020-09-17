@@ -1,14 +1,15 @@
 package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
-import com.engg.digitalorg.model.entity.CardInGroup;
-import com.engg.digitalorg.model.entity.Group;
-import com.engg.digitalorg.model.entity.UserInGroup;
+import com.engg.digitalorg.exception.ForbiddenException;
+import com.engg.digitalorg.model.entity.*;
 import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
+import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.GroupResponse;
 import com.engg.digitalorg.repository.CardInGroupRepository;
+import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.GroupRepository;
 import com.engg.digitalorg.repository.UserInGroupRepository;
 import org.modelmapper.ModelMapper;
@@ -27,6 +28,9 @@ public class GroupManager {
 
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
 
     @Autowired
     private UserInGroupRepository userInGroupRepository;
@@ -203,8 +207,13 @@ public class GroupManager {
         Group  group = getGroupById(cardInGroupRequest.getGroup_id());
         Collection<CardInGroup> cardInGroups =  cardInGroupRepository.fetchAllCardByGroupId(group.getId());
         if(cardInGroups.isEmpty()) {
-            CardInGroup cardInGroup = saveCardInGroup(cardInGroupRequest);
-            return cardInGroup;
+            if(group.getCreated_by().equals(cardInGroupRequest.getAdded_by())) {
+                CardInGroup cardInGroup = saveCardInGroup(cardInGroupRequest);
+                return cardInGroup;
+            }
+            else {
+                throw new ForbiddenException("Since, you are not part of this group, You are not authorise to perform this action.");
+            }
         }
         else {
             userInGroupRepository.findAllUserInGroupByGroupID(group.getId()).stream().map(userInGroup -> {
@@ -221,7 +230,7 @@ public class GroupManager {
     private CardInGroup saveCardInGroup(CardInGroupRequest cardInGroupRequest) {
         CardInGroup cardInGroup = new CardInGroup();
         cardInGroup.setCard_id(cardInGroupRequest.getCard_id());
-        cardInGroup.setGroup_id(cardInGroupRequest.getCard_id());
+        cardInGroup.setGroup_id(cardInGroupRequest.getGroup_id());
         cardInGroup.setAdded_by(cardInGroupRequest.getAdded_by());
         cardInGroup.setAdded_date(new Date());
         cardInGroupRepository.save(cardInGroup);
@@ -260,7 +269,10 @@ public class GroupManager {
      * @param groupId the group id
      * @return the all card for group manager
      */
-    public List<Group> getAllCardForGroupManager(int groupId) {
-        return groupRepository.findAllById(Collections.singleton(groupId));
+    public List<Card> getAllCardForGroupManager(int groupId) {
+        List<Card> cards = new ArrayList<>();
+        Collection<CardInGroup> cardInGroups =  cardInGroupRepository.fetchAllCardByGroupId(groupId);
+        cardInGroups.stream().forEach(cardInGroup -> cards.addAll(cardRepository.findAllById(Collections.singleton(cardInGroup.getCard_id()))));
+        return cards;
     }
 }

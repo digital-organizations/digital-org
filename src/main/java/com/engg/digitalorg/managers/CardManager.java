@@ -106,6 +106,10 @@ public class CardManager {
         byte[] bytes = new byte[(int) classPathResource.contentLength()];
         Icon icon = iconRepository.save(new Icon("favicon.png", "image/png", response.getId(), DigitalUtil.compressBytes(bytes)));
 
+        if(cardInGroupRepository.fetchGrupByCardId(response.getId()).isEmpty()) {
+            cardRequest.setExpire_date(null);
+        }
+
         if (cardRequest.getOriginal_url() != null) {
             Url newUrl = createShortUrl(cardRequest.getOriginal_url(), cardRequest.getExpire_date(), response.getId());
             cardRepository.updateAddress(newUrl.getId(), icon.getId(), response.getId());
