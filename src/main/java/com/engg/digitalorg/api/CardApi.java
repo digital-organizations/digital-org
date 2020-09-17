@@ -159,7 +159,7 @@ public interface CardApi {
      */
     @ApiOperation(value = "Delete Suggestion For Card", notes = " Delete Suggestion For Card", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
-    @DeleteMapping(path = "/suggestion{suggestion-id}", produces = "application/json")
+    @DeleteMapping(path = "/suggestion/{suggestion-id}", produces = "application/json")
     ResponseEntity<SuggestionQueue> suggestionForCard(@PathVariable("suggestion-id") int suggestionId) throws DigitalOrgException, NotFoundException;
 
     /**
