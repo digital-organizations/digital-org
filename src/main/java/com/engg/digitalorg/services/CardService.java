@@ -94,4 +94,9 @@ public class CardService implements CardApi {
         return new ResponseEntity<>(cardManager.suggestionForCard(suggestionQueueRequest), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<List<SuggestionQueue>> getAllSuggestionForCard(String email) throws DigitalOrgException, NotFoundException {
+        return new ResponseEntity<>(cardManager.getAllSuggestionForCard(email), HttpStatus.OK);
+    }
+
 }

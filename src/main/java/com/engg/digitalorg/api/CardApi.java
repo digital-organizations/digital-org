@@ -134,4 +134,10 @@ public interface CardApi {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
     @PostMapping(path = "/suggestion", produces = "application/json")
     ResponseEntity<SuggestionQueue> suggestionForCard(@RequestBody SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException;
+
+
+    @ApiOperation(value = "Suggestion For Card", notes = "Suggestion For Card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @GetMapping(path = "/suggestion{email}", produces = "application/json")
+    ResponseEntity<List<SuggestionQueue>> getAllSuggestionForCard(@PathVariable("email") String email) throws DigitalOrgException, NotFoundException;
 }

@@ -20,10 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -229,8 +226,9 @@ public class CardManager {
      * @return the object
      */
     public CardResponse updateCard(CardUpdateRequest cardRequest) {
-        CardResponse cardResponse = null;
+        CardResponse cardResponse = new CardResponse();
         Optional<Card> cardOptional = cardRepository.findById(cardRequest.getId());
+        String shortUrl = null;
         Card card = cardOptional.get();
         if (card != null && card.getCreated_by().equals(cardRequest.getUpdated_by())) {
             ModelMapper reqModelMapper = new ModelMapper();
@@ -242,14 +240,15 @@ public class CardManager {
             cardMapper.setIcon_id(card.getIcon_id());
             cardMapper.setUrl_id(card.getUrl_id());
             if (cardRequest.getOriginal_url() != null) {
-                String shortUrl = updateShortUrl(card, cardRequest.getOriginal_url(), cardRequest.getExpire_date(), card.getUrl_id());
-                cardResponse.setShort_url(shortUrl);
+                shortUrl = updateShortUrl(card, cardRequest.getOriginal_url(), cardRequest.getExpire_date(), card.getUrl_id());
+
             }
             cardRepository.save(cardMapper);
             ModelMapper resModelMapper = new ModelMapper();
             cardResponse = resModelMapper.map(cardMapper, CardResponse.class);
             cardResponse.setHasAdmin(true);
             cardResponse.setOriginal_url(cardRequest.getOriginal_url());
+            cardResponse.setShort_url(shortUrl);
             cardResponse.setExpire_date(cardRequest.getExpire_date());
             return cardResponse;
         }
@@ -287,10 +286,18 @@ public class CardManager {
             suggestionQueue.setCard_id(suggestionQueueRequest.getCard_id());
             suggestionQueue.setEmail(suggestionQueueRequest.getEmail());
             suggestionQueue.setSuggested_date(new Date());
+            suggestionQueue.setSuggestion_text(suggestionQueueRequest.getSuggestion_text());
             return suggestionQueueRepository.save(suggestionQueue);
         }
         else {
             throw new NotFoundException("Requested card is not available for suggestion.");
         }
+    }
+
+    public List<SuggestionQueue> getAllSuggestionForCard(String email) {
+        List<CardResponse> cardResponseList = getAllCard(email);
+        List <SuggestionQueue> result = new ArrayList<>();
+        cardResponseList.stream().forEach((cardResponse -> result.addAll(suggestionQueueRepository.getAllSuggestionQueueByCardId(cardResponse.getId()))));
+       return result;
     }
 }

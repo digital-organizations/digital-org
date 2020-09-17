@@ -1,7 +1,10 @@
 package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
+import com.engg.digitalorg.exception.NotFoundException;
+import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Url;
+import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.UrlRepository;
 import com.engg.digitalorg.util.BaseConversion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class UrlManager {
     @Autowired
     private UrlRepository urlRepository;
 
+    @Autowired
+    private CardRepository cardRepository;
+
     /**
      * The Base conversion.
      */
@@ -38,19 +44,19 @@ public class UrlManager {
         Optional<Url> entity;
         try {
             int id = baseConversion.decode(shortUrl);
-            entity = urlRepository.findById(id);
+
+            Optional<Card> card = cardRepository.findById(id);
+            entity = urlRepository.findById(card.get().getUrl_id());
             if (entity.get() == null) {
-                throw new EntityNotFoundException("There is no record with " + shortUrl);
+                throw new NotFoundException("There is no record with " + shortUrl);
             }
             if (entity.get().getExpires_date() != null && entity.get().getExpires_date().before(new Date())) {
-                urlRepository.delete(entity.get());
-                throw new EntityNotFoundException("Link expired!");
+//                urlRepository.delete(entity.get());
+                throw new NotFoundException("Link expired!");
             }
         } catch (NoSuchElementException exception) {
-            throw new DigitalOrgException("There is no record with " + shortUrl);
+            throw new NotFoundException("There is no record with " + shortUrl);
         }
-
-
         return entity.get().getLong_url();
     }
 }

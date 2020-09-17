@@ -21,5 +21,6 @@ public class SuggestionQueue {
     private int card_id;
     private String email;
     private Date suggested_date;
+    private String suggestion_text;
 
 }

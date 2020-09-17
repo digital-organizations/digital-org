@@ -13,6 +13,6 @@ import java.util.Date;
 public class SuggestionQueueRequest {
     private int card_id;
     private String email;
-    private Date suggested_date;
+    private String suggestion_text;
 
 }

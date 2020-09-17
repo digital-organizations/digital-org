@@ -54,7 +54,7 @@ public class DigitalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<Object> handleNotFoundException(BadRequestException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
         return new ResponseEntity(new ErrorMessage(ex.getMessage()).toJson(), HttpStatus.NOT_FOUND);
     }
 

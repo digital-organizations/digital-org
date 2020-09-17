@@ -87,15 +87,8 @@ create table digital.suggestion_queue
 (
     id           SERIAL PRIMARY KEY,
     card_id     int references digital.card(id),
-    user        varchar,
-    suggested_date date
-);
-
-create table digital.suggestion_queue
-(
-    id           SERIAL PRIMARY KEY,
-    card_id     int references digital.card(id),
     email        varchar,
-    suggested_date date
+    suggested_date date,
+    suggestion_text varchar
 );
 
