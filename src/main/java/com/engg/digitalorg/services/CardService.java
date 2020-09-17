@@ -74,7 +74,7 @@ public class CardService implements CardApi {
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
         ByteArrayResource resource = new ByteArrayResource(icon.getFile());
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/octet-stream")).body(resource);
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("image/png")).body(resource);
     }
 
     @Override

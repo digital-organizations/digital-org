@@ -8,10 +8,7 @@ import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
 import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.GroupResponse;
-import com.engg.digitalorg.repository.CardInGroupRepository;
-import com.engg.digitalorg.repository.CardRepository;
-import com.engg.digitalorg.repository.GroupRepository;
-import com.engg.digitalorg.repository.UserInGroupRepository;
+import com.engg.digitalorg.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,6 +35,8 @@ public class GroupManager {
     @Autowired
     private CardInGroupRepository cardInGroupRepository;
 
+    @Autowired
+    private UrlRepository urlRepository;
     /**
      * Gets group.
      *
@@ -209,6 +208,7 @@ public class GroupManager {
         if(cardInGroups.isEmpty()) {
             if(group.getCreated_by().equals(cardInGroupRequest.getAdded_by())) {
                 CardInGroup cardInGroup = saveCardInGroup(cardInGroupRequest);
+                urlRepository.updateUrlExpireDate(null, cardInGroup.getCard_id());
                 return cardInGroup;
             }
             else {
@@ -254,12 +254,14 @@ public class GroupManager {
                 if (userInGroup.getEmail().equals(cardInGroupRequest.getAdded_by())) {
                     cardInGroups.stream().map(cardInGroup -> {
                         cardInGroupRepository.deleteCardInGroup(cardInGroup.getCard_id());
+                        urlRepository.updateUrlExpireDate(new Date(), cardInGroup.getCard_id());
                         return null;
                     });
                 }
                 return null;
             });
         }
+
         return null;
     }
 

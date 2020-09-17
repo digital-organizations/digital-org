@@ -27,4 +27,8 @@ public interface SuggestionQueueRepository extends JpaRepository<SuggestionQueue
     @Query("SELECT sq FROM SuggestionQueue sq WHERE sq.card_id = :card_id")
     Collection<SuggestionQueue> getAllSuggestionQueueByCardId(@Param("card_id") int card_id);
 
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM SuggestionQueue sq WHERE sq.card_id = :card_id")
+    void deleteSuggestionQueueByCardId( @Param("card_id") int card_id);
+
 }

@@ -106,7 +106,7 @@ public class CardManager {
         byte[] bytes = new byte[(int) classPathResource.contentLength()];
         Icon icon = iconRepository.save(new Icon("favicon.png", "image/png", response.getId(), DigitalUtil.compressBytes(bytes)));
 
-        if(cardInGroupRepository.fetchGrupByCardId(response.getId()).isEmpty()) {
+        if(!cardInGroupRepository.fetchGrupByCardId(response.getId()).isEmpty()) {
             cardRequest.setExpire_date(null);
         }
 
@@ -185,6 +185,7 @@ public class CardManager {
      */
     public void deleteCard(Card card, String email) {
         if (card.getCreated_by().equals(email)) {
+            suggestionQueueRepository.deleteSuggestionQueueByCardId(card.getId());
             cardInGroupRepository.deleteCardInGroup(card.getId());
             iconRepository.deleteById(card.getIcon_id());
             urlRepository.deleteById(card.getUrl_id());
@@ -259,6 +260,10 @@ public class CardManager {
             if (cardRequest.getOriginal_url() != null) {
                 shortUrl = updateShortUrl(card, cardRequest.getOriginal_url(), cardRequest.getExpire_date(), card.getUrl_id());
 
+            }
+
+            if(!cardInGroupRepository.fetchGrupByCardId(card.getId()).isEmpty()) {
+                cardRequest.setExpire_date(null);
             }
             cardRepository.save(cardMapper);
             ModelMapper resModelMapper = new ModelMapper();

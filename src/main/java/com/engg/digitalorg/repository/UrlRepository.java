@@ -29,6 +29,11 @@ public interface UrlRepository extends JpaRepository<Url, Integer> {
     @Query("UPDATE Url u SET u.long_url = :long_url, u.short_url = :short_url, u.expires_date = :expires_date WHERE u.id = :id")
     void updateUrl(@Param("long_url") String long_url, @Param("short_url") String short_url, @Param("expires_date") Date expires_date, @Param("id") int id);
 
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Url u SET u.expires_date = :expires_date WHERE u.card_id = :card_id")
+    void updateUrlExpireDate(@Param("expires_date") Date expires_date,@Param("card_id") int card_id);
+
     /**
      * Fetch url object by card id collection.
      *
