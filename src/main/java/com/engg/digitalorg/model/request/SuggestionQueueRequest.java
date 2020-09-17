@@ -3,8 +3,6 @@ package com.engg.digitalorg.model.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 /**
  * The type Suggestion queue request.
  */

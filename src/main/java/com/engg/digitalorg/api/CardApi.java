@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RequestMapping("/card")
 @Api(tags = "Card Services")
-@CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface CardApi {
 
     /**
@@ -148,6 +148,19 @@ public interface CardApi {
     @PostMapping(path = "/suggestion", produces = "application/json")
     ResponseEntity<SuggestionQueue> suggestionForCard(@RequestBody SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException;
 
+
+    /**
+     * Suggestion for card response entity.
+     *
+     * @param suggestionId the suggestion id
+     * @return the response entity
+     * @throws DigitalOrgException the digital org exception
+     * @throws NotFoundException   the not found exception
+     */
+    @ApiOperation(value = "Delete Suggestion For Card", notes = " Delete Suggestion For Card", response = ResponseEntity.class)
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "ok", response = ResponseEntity.class), @ApiResponse(code = 400, message = "bad request")})
+    @DeleteMapping(path = "/suggestion{suggestion-id}", produces = "application/json")
+    ResponseEntity<SuggestionQueue> suggestionForCard(@PathVariable("suggestion-id") int suggestionId) throws DigitalOrgException, NotFoundException;
 
     /**
      * Gets all suggestion for card.

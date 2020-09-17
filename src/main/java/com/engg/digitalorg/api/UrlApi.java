@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @RequestMapping("/url")
 @Api(tags = "Url Services", description = "Url Api")
-@CrossOrigin(origins = {"https://digital-org.herokuapp.com/", "http://localhost:4200"})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface UrlApi {
 
     /**

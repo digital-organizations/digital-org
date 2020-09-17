@@ -1,4 +1,4 @@
-# digital-org
+# Digital Organization
 
 [![CircleCI](https://circleci.com/gh/abhayshukla04/digital-org.svg?style=svg&circle-token=31bf8b5fd55119ac94b0c8bd9b04713467d392bb)](https://circleci.com/gh/abhayshukla04/digital-org)
 

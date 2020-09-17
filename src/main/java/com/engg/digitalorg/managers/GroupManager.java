@@ -2,11 +2,13 @@ package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.exception.ForbiddenException;
-import com.engg.digitalorg.model.entity.*;
+import com.engg.digitalorg.model.entity.Card;
+import com.engg.digitalorg.model.entity.CardInGroup;
+import com.engg.digitalorg.model.entity.Group;
+import com.engg.digitalorg.model.entity.UserInGroup;
 import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
-import com.engg.digitalorg.model.response.CardResponse;
 import com.engg.digitalorg.model.response.GroupResponse;
 import com.engg.digitalorg.repository.*;
 import org.modelmapper.ModelMapper;
@@ -37,6 +39,7 @@ public class GroupManager {
 
     @Autowired
     private UrlRepository urlRepository;
+
     /**
      * Gets group.
      *

@@ -58,6 +58,13 @@ public class DigitalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(new ErrorMessage(ex.getMessage()).toJson(), HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Handle forbidden exception response entity.
+     *
+     * @param ex      the ex
+     * @param request the request
+     * @return the response entity
+     */
     @ExceptionHandler(ForbiddenException.class)
     protected ResponseEntity<Object> handleForbiddenException(ForbiddenException ex, WebRequest request) {
         return new ResponseEntity(new ErrorMessage(ex.getMessage()).toJson(), HttpStatus.FORBIDDEN);

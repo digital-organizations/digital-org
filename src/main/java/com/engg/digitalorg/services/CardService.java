@@ -5,7 +5,6 @@ import com.engg.digitalorg.api.CardApi;
 import com.engg.digitalorg.exception.BadRequestException;
 import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.managers.CardManager;
-import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Icon;
 import com.engg.digitalorg.model.entity.SuggestionQueue;
 import com.engg.digitalorg.model.request.CardRequest;
@@ -98,6 +97,12 @@ public class CardService implements CardApi {
     @Override
     public ResponseEntity<SuggestionQueue> suggestionForCard(SuggestionQueueRequest suggestionQueueRequest) throws DigitalOrgException, NotFoundException {
         return new ResponseEntity<>(cardManager.suggestionForCard(suggestionQueueRequest), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity suggestionForCard(int suggestionId) throws DigitalOrgException, NotFoundException {
+        cardManager.deleteSuggestionForCard(suggestionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override

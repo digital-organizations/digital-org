@@ -328,4 +328,13 @@ public class CardManager {
         cardResponseList.stream().forEach((cardResponse -> result.addAll(suggestionQueueRepository.getAllSuggestionQueueByCardId(cardResponse.getId()))));
        return result;
     }
+
+    /**
+     * Delete suggestion for card.
+     *
+     * @param suggestionId the suggestion id
+     */
+    public void deleteSuggestionForCard(int suggestionId) {
+        suggestionQueueRepository.deleteById(suggestionId);
+    }
 }

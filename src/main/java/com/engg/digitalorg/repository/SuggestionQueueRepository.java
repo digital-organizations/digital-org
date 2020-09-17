@@ -1,8 +1,6 @@
 package com.engg.digitalorg.repository;
 
-import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.entity.SuggestionQueue;
-import com.engg.digitalorg.model.entity.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +25,11 @@ public interface SuggestionQueueRepository extends JpaRepository<SuggestionQueue
     @Query("SELECT sq FROM SuggestionQueue sq WHERE sq.card_id = :card_id")
     Collection<SuggestionQueue> getAllSuggestionQueueByCardId(@Param("card_id") int card_id);
 
+    /**
+     * Delete suggestion queue by card id.
+     *
+     * @param card_id the card id
+     */
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM SuggestionQueue sq WHERE sq.card_id = :card_id")
     void deleteSuggestionQueueByCardId( @Param("card_id") int card_id);

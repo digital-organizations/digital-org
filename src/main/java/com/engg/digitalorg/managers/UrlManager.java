@@ -1,6 +1,5 @@
 package com.engg.digitalorg.managers;
 
-import com.engg.digitalorg.exception.DigitalOrgException;
 import com.engg.digitalorg.exception.NotFoundException;
 import com.engg.digitalorg.model.entity.Card;
 import com.engg.digitalorg.model.entity.Url;
@@ -10,7 +9,6 @@ import com.engg.digitalorg.util.BaseConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
