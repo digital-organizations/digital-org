@@ -133,7 +133,7 @@ public class GroupManager {
     public void addUserToGroup(String userEmail, String adminEmail, int groupId) {
         List<UserInGroup> userInGroups = userInGroupRepository.findAllUserInGroupByGroupID(groupId);
         userInGroups.stream().map(userInGroup -> {
-            if (userInGroup.getEmail().equals(adminEmail)) {
+            if (userInGroup.getAdded_by().equals(adminEmail)) {
                 UserInGroup user = new UserInGroup();
                 user.setEmail(userEmail);
                 user.setGroup_id(userInGroup.getGroup_id());
@@ -142,21 +142,22 @@ public class GroupManager {
                 userInGroupRepository.save(user);
             }
             return "";
-        });
+        }).collect(Collectors.toList());
     }
 
     /**
      * Remove user to group.
      *
-     * @param email   the email
-     * @param groupId the group id
+     * @param userEmail  the user email
+     * @param adminEmail the admin email
+     * @param groupId    the group id
      */
-    public void removeUserToGroup(String email, int groupId) {
+    public void removeUserToGroup(String userEmail, String adminEmail, int groupId) {
         List<UserInGroup> userInGroups = userInGroupRepository.findAllUserInGroupByGroupID(groupId);
         if (userInGroups.size() > 1) {
             userInGroups.stream().map(userInGroup -> {
-                if (userInGroup.getEmail().equals(email)) {
-                    userInGroupRepository.deleteById(userInGroup.getId());
+                if (userInGroup.getEmail().equals(adminEmail)) {
+                    userInGroupRepository.deleteUserfromGroup(userEmail);
                 }
 
                 return "";

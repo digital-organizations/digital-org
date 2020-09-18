@@ -48,8 +48,8 @@ public class GroupService implements GroupApi {
     }
 
     @Override
-    public ResponseEntity removeUserFromGroup(String email, int groupId) throws DigitalOrgException {
-        groupManager.removeUserToGroup(email, groupId);
+    public ResponseEntity removeUserFromGroup(String userEmail, String adminEmail, int groupId) throws DigitalOrgException {
+        groupManager.removeUserToGroup(userEmail, adminEmail, groupId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

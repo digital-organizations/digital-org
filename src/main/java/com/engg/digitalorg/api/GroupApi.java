@@ -72,15 +72,16 @@ public interface GroupApi {
     /**
      * Remove user from group response entity.
      *
-     * @param email   the email
-     * @param groupId the group id
+     * @param userEmail  the user email
+     * @param adminEmail the admin email
+     * @param groupId    the group id
      * @return the response entity
      * @throws DigitalOrgException the digital org exception
      */
     @ApiOperation(value = "remove user from group", notes = "remove User from group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "No content", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
     @DeleteMapping(path = "/user-from-group", consumes = "application/json", produces = "application/json")
-    ResponseEntity removeUserFromGroup(@ApiParam(value = "email", required = true) @RequestBody String email, int groupId) throws DigitalOrgException;
+    ResponseEntity removeUserFromGroup(@ApiParam(value = "email", required = true) @RequestBody String userEmail, String adminEmail, int groupId) throws DigitalOrgException;
 
     /**
      * Gets all group service.

@@ -1,8 +1,8 @@
-# Digital Organization
+# Digital Organization API's
 
 [![CircleCI](https://circleci.com/gh/abhayshukla04/digital-org.svg?style=svg&circle-token=31bf8b5fd55119ac94b0c8bd9b04713467d392bb)](https://circleci.com/gh/abhayshukla04/digital-org)
 
-[![Build Status](https://travis-ci.com/abhayshukla04/digital-org.svg?token=uk63pxdAgoFGezW3mmw9&branch=master)](https://travis-ci.com/abhayshukla04/digital-org)
+[![Build Status](https://travis-ci.com/digital-team-dto/digital-org.svg?token=uk63pxdAgoFGezW3mmw9&branch=master)](https://travis-ci.com/digital-team-dto/digital-org)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e96517f467ff49e38e839728dd71d8fa)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=abhayshukla04/digital-org&amp;utm_campaign=Badge_Grade)
 
