@@ -18,10 +18,6 @@ $ mvn spring-boot:run
 
 http://localhost:8080/swagger-ui/#/
 
-Deployyment 
-
-    [![Heroku](https://digital-org.herokuapp.com//?app=digital-org&style=flat&svg=1&root=notfound.html)]
-
 Heroku CLI :
 ```
 $heroku login
@@ -31,6 +27,11 @@ $ heroku logs -t --app digital-org
 ## 2. Heroku Swagger UI
 Swagger UI :https://digital-org.herokuapp.com/swagger-ui/#/
 
+## DB Design :
+
+![digital](src/main/resources/digital.png)
+
+SQL : (src/main/resources/sql/digital.sql)
 
 ## 3. Tech Stack
 ```
@@ -38,8 +39,3 @@ spring-boot : 2.3.3.RELEASE
 PostgreSQL : 12
 ```
 ## 3. Design Diagram
-```
-to be continued...
-```
-
-https://dzone.com/articles/upload-and-retrieve-filesimages-using-spring-boot

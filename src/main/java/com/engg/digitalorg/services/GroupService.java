@@ -8,6 +8,7 @@ import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
+import com.engg.digitalorg.model.request.UserToGroupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +43,14 @@ public class GroupService implements GroupApi {
 
 
     @Override
-    public ResponseEntity addUserToGroup(String userEmail, String adminEmail, int groupId) throws DigitalOrgException {
-        groupManager.addUserToGroup(userEmail, adminEmail, groupId);
+    public ResponseEntity addUserToGroup(UserToGroupRequest userToGroupRequest) throws DigitalOrgException {
+        groupManager.addUserToGroup(userToGroupRequest.getUserEmail(), userToGroupRequest.getAdminEmail(), userToGroupRequest.getGroupId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity removeUserFromGroup(String userEmail, String adminEmail, int groupId) throws DigitalOrgException {
-        groupManager.removeUserToGroup(userEmail, adminEmail, groupId);
+    public ResponseEntity removeUserFromGroup(UserToGroupRequest userToGroupRequest) throws DigitalOrgException {
+        groupManager.removeUserToGroup(userToGroupRequest.getUserEmail(), userToGroupRequest.getAdminEmail(), userToGroupRequest.getGroupId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -5,6 +5,7 @@ import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.CardInGroupRequest;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
+import com.engg.digitalorg.model.request.UserToGroupRequest;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,8 +67,8 @@ public interface GroupApi {
      */
     @ApiOperation(value = "add user to group", notes = "add user to group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 201, message = "accepted operation", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
-    @PostMapping(path = "/user-to-group", consumes = "application/json", produces = "application/json")
-    ResponseEntity addUserToGroup(@ApiParam(value = "email", required = true) @RequestBody String userEmail, String adminEmail, int groupId) throws DigitalOrgException;
+    @PostMapping(path = "/add-user-to-group", consumes = "application/json", produces = "application/json")
+    ResponseEntity addUserToGroup(@RequestBody UserToGroupRequest userToGroupRequest) throws DigitalOrgException;
 
     /**
      * Remove user from group response entity.
@@ -80,8 +81,8 @@ public interface GroupApi {
      */
     @ApiOperation(value = "remove user from group", notes = "remove User from group", response = ResponseEntity.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "No content", response = ResponseEntity.class), @ApiResponse(code = 400, message = "Group type unknown")})
-    @DeleteMapping(path = "/user-from-group", consumes = "application/json", produces = "application/json")
-    ResponseEntity removeUserFromGroup(@ApiParam(value = "email", required = true) @RequestBody String userEmail, String adminEmail, int groupId) throws DigitalOrgException;
+    @PostMapping(path = "/remove-user-from-group", consumes = "application/json", produces = "application/json")
+    ResponseEntity removeUserFromGroup(@RequestBody UserToGroupRequest userToGroupRequest) throws DigitalOrgException;
 
     /**
      * Gets all group service.

@@ -5,6 +5,7 @@ import com.engg.digitalorg.managers.GroupManager;
 import com.engg.digitalorg.model.entity.Group;
 import com.engg.digitalorg.model.request.GroupRequest;
 import com.engg.digitalorg.model.request.GroupUpdateRequest;
+import com.engg.digitalorg.model.request.UserToGroupRequest;
 import com.engg.digitalorg.model.response.GroupResponse;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -277,7 +278,8 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        final ResponseEntity result = groupServiceUnderTest.addUserToGroup("user", "admin", 0);
+        UserToGroupRequest userToGroupRequest = new UserToGroupRequest();
+        final ResponseEntity result = groupServiceUnderTest.addUserToGroup(userToGroupRequest);
 
         // Verify the results
         verify(mockGroupManager).addUserToGroup("user", "groupName", 1);
@@ -305,7 +307,8 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        groupServiceUnderTest.addUserToGroup("user", "admin", 0);
+        UserToGroupRequest userToGroupRequest = new UserToGroupRequest();
+        groupServiceUnderTest.addUserToGroup(userToGroupRequest);
     }
 
     /**
@@ -330,7 +333,8 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        final ResponseEntity result = groupServiceUnderTest.removeUserFromGroup("user",  "",0);
+        UserToGroupRequest userToGroupRequest = new UserToGroupRequest();
+        final ResponseEntity result = groupServiceUnderTest.removeUserFromGroup(userToGroupRequest);
 
         // Verify the results
         verify(mockGroupManager).removeUserToGroup("user", "",1);
@@ -358,7 +362,8 @@ public class GroupServiceTest {
         when(mockGroupManager.getGroupById(0)).thenReturn(group);
 
         // Run the test
-        groupServiceUnderTest.removeUserFromGroup("user", "",0);
+        UserToGroupRequest userToGroupRequest = new UserToGroupRequest();
+        groupServiceUnderTest.removeUserFromGroup(userToGroupRequest);
     }
 
     /**

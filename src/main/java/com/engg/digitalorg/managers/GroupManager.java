@@ -161,9 +161,9 @@ public class GroupManager {
                 }
 
                 return "";
-            });
+            }).collect(Collectors.toList());
         } else {
-            throw new DigitalOrgException("You are only admin of this group, please other as a admin to this group, then remove");
+            throw new ForbiddenException("You are only admin left in this group, please add any other member as a admin to remove this user.");
         }
     }
 

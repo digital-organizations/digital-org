@@ -12,7 +12,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 /**
  * The type Digital org application.
  */
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ErrorMvcAutoConfiguration.class})
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableJpaRepositories(basePackages = "com.engg.digitalorg.repository")
 public class DigitalOrgApplication {
 
