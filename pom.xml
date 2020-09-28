@@ -10,6 +10,9 @@
     </parent>
 
     <properties>
+        <sonar.projectKey>digital-organizations_digital-org</sonar.projectKey>
+        <sonar.organization>digital-organizations</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>

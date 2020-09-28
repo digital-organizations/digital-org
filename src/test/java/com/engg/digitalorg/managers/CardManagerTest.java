@@ -1,9 +1,11 @@
 package com.engg.digitalorg.managers;
 
 import com.engg.digitalorg.model.entity.Card;
+import com.engg.digitalorg.model.entity.CardInGroup;
 import com.engg.digitalorg.model.entity.Icon;
 import com.engg.digitalorg.model.request.CardRequest;
 import com.engg.digitalorg.model.response.CardResponse;
+import com.engg.digitalorg.repository.CardInGroupRepository;
 import com.engg.digitalorg.repository.CardRepository;
 import com.engg.digitalorg.repository.IconRepository;
 import org.mockito.InjectMocks;
@@ -26,6 +28,10 @@ public class CardManagerTest {
 
     @Mock
     private CardRepository mockCardRepository;
+
+    @Mock
+    private CardInGroupRepository mockCardInGroupRepository;
+
     @Mock
     private IconRepository mockIconRepository;
 
@@ -47,17 +53,21 @@ public class CardManagerTest {
      */
     @Test
     public void testCreateCard() throws Exception {
+
+        final CardInGroup cardInGroup = new CardInGroup();
+        List<CardInGroup> cardInGroups = new ArrayList<>();
+
         // Setup
         final CardRequest cardRequest = new CardRequest();
         cardRequest.setTitle("title");
         cardRequest.setDescription("description");
-        cardRequest.setOriginal_url("original_url");
+        cardRequest.setOriginal_url("https://codecov.io/gh/digital-organizations/digital-org/compare/bec00b2af2f45c2f58557caee4f570e41973a2a5...dc5db77e4d5935e56ef79224a0da95ad4e184fa0/tree");
         cardRequest.setExpire_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        cardRequest.setCreated_by("created_by");
+        cardRequest.setCreated_by("user@gmail.com");
         cardRequest.setTribe("tribe");
         cardRequest.setTeam("team");
         cardRequest.setComponent("component");
-        cardRequest.setUpdated_by("updated_by");
+        cardRequest.setUpdated_by("user@gmail.com");
 
         // Configure CardRepository.save(...).
         final Card card = new Card();
@@ -66,10 +76,12 @@ public class CardManagerTest {
         card.setDescription("description");
         card.setUrl_id(23);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        card.setCreated_by("created_by");
+        card.setCreated_by("user@gmail.com");
         card.setTribe("tribe");
         card.setTeam("team");
         when(mockCardRepository.save(any(Card.class))).thenReturn(card);
+        when(mockCardInGroupRepository.fetchGrupByCardId(card.getId())).thenReturn(cardInGroups);
+
 
         // Run the test
         final CardResponse result = cardManagerUnderTest.createCard(cardRequest);
@@ -126,7 +138,7 @@ public class CardManagerTest {
         card1.setDescription("description");
         card1.setUrl_id(90);
         card1.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        card1.setCreated_by("created_by");
+        card1.setCreated_by("user@gmail.com");
         card1.setTribe("tribe");
         card1.setTeam("team");
         final Optional<Card> card = Optional.of(card1);
@@ -210,7 +222,7 @@ public class CardManagerTest {
         card.setDescription("description");
         card.setUrl_id(45);
         card.setCreated_date(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-        card.setCreated_by("created_by");
+        card.setCreated_by("user@gmail.com");
         card.setTribe("tribe");
         card.setTeam("team");
         final List<Card> cards = Arrays.asList(card);
