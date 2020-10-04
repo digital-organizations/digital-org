@@ -22,7 +22,7 @@
     </appender>
 
     <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
-        <url>https://elastic:NRz964Jlpsx2htzvYwujoCt6@7900b63b44a24f9d80102243ef383b58.eastus2.azure.elastic-cloud.com:9243/_bulk</url>
+        <url>https://elastic:a0Ny8XFNvg7u1znkZeeaO3mR@c013054f3b784fcfa1caa48efc9d0f18.us-east-1.aws.found.io:9243/_bulk</url>
         <index>digital-logs-%date{yyyy-MM-dd}</index>
         <type>logs</type>
         <loggerName>es-logger</loggerName> <!-- optional -->
